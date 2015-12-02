@@ -16,6 +16,11 @@ group :development, :test do
   gem 'byebug'
 end
 
+group :test do
+  gem 'shoulda-matchers', '>= 3.0.0', require: false
+end
+
+
 group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
