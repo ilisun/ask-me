@@ -6,17 +6,11 @@ feature 'Siging in', %q{
   I want be able to sign in
  } do
 
-  # given(:user) { create(:user) }
+  given(:user) { create(:user) }
+  # also: User.create!(email: 'user@user.com', password: '12345678')
 
   scenario 'Existing user try to sign in' do
-    # sign_in(user)
-
-    User.create!(email: 'user@user.com', password: '12345678')
-    visit new_user_session_path
-    fill_in 'Email', with: 'user@user.com'
-    fill_in 'Password', with: '12345678'
-    # save_and_open_page
-    click_on 'Log in'
+    sign_in(user)
 
     expect(page).to have_content 'Signed in successfully.'
     expect(current_path).to eq root_path
@@ -33,3 +27,5 @@ feature 'Siging in', %q{
 
   end
 end
+
+# save_and_open_page
