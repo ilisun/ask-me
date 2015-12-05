@@ -7,6 +7,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'turbolinks'
+gem 'jquery-turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
@@ -24,6 +25,7 @@ group :test do
   gem 'shoulda-matchers', '>= 3.0.0', require: false
   gem 'capybara'
   gem 'launchy'
+  gem 'database_cleaner'
 end
 
 group :development do

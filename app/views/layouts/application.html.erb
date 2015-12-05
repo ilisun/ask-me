@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Ask</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+  <head>
+    <meta charset="utf-8">
+    <title>Ask me...</title>
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<%= yield %>
+    <!-- Web Fonts  -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800%7CShadows+Into+Light" rel="stylesheet" type="text/css">
 
-</body>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+    <div class="body">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <%= render 'layouts/header' %>
+
+      <div role="main" class="main">
+        <%= yield %>
+      </div>
+
+      <%= render 'layouts/footer' %>
+    </div>
+    <%= javascript_include_tag "theme.js" %>
+  </body>
 </html>

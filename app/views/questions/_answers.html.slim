@@ -1,0 +1,58 @@
+- @question.answers.each do |answer|
+  - if answer.persisted?
+    article.post.post-large.blog-single-post
+      .post-date
+        span.day
+          | 10
+        span.month
+          | Jan
+      .post-content
+
+        p = answer.body
+
+        .post-meta
+          span
+            i.icon.icon-user
+            |  By
+            a[href="#"]
+              | John Doe
+          span
+            i.icon.icon-tag
+            a[href="#"]
+              | Duis
+            | ,
+            a[href="#"]
+              | News
+
+        /.post-block.post-comments.clearfix
+        /
+        /  ul.comments
+        /    li
+        /      ul.comments.reply
+        /        li
+        /          .comment
+        /            .img-thumbnail
+        /              = image_tag "avatar.jpg", alt: "Avatar", class: "avatar"
+        /            .comment-block
+        /              .comment-arrow
+        /              span.comment-by
+        /              p
+        /                | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae, gravida pellentesque urna varius vitae.
+        /              span.date.pull-right
+        /                | January 12, 2013 at 1:38 pm -
+        /                strong
+        /                  | - John Doe
+        /      ul.comments.reply
+        /        li
+        /          .comment
+        /            .img-thumbnail
+        /              = image_tag "avatar.jpg", alt: "Avatar", class: "avatar"
+        /            .comment-block
+        /              .comment-arrow
+        /              span.comment-by
+        /              p
+        /                | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae, gravida pellentesque urna varius vitae.
+        /              span.date.pull-right
+        /                | January 12, 2013 at 1:38 pm -
+        /                strong
+        /                  | - John Doe

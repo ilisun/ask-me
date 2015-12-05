@@ -11,6 +11,7 @@ feature 'User answer', %q{
 
   scenario 'Authenticated user create answer' do
     sign_in(user)
+
     visit question_path(question)
     fill_in 'Your answer', with: 'My answer'
     click_on 'Create'

@@ -1,11 +1,85 @@
-h1= @question.title
-p= @question.body
+.container
+  .row
+    .col-md-9
+      .blog-posts.single-post.answers
+        article.post.post-large.blog-single-post
+          .post-date
+            span.day
+              | 10
+            span.month
+              | Jan
+          .post-content
+            h2
+              = @question.title
 
-.answers
-  -@question.answers.each do |answer|
-    p= answer.body
+            p = @question.body
 
-= form_for [@question, @answer] do |f|
-  = f.label :body, 'Your answer'
-  = f.text_area :body
-  = f.submit 'Create'
+            .post-meta
+              span
+                i.icon.icon-user
+                |  By
+                a[href="#"]
+                  | John Doe
+              span
+                i.icon.icon-tag
+                a[href="#"]
+                  | Duis
+                | ,
+                a[href="#"]
+                  | News
+
+
+            /.post-block.post-comments.clearfix
+            /  ul.comments
+            /    li
+            /      ul.comments.reply
+            /        li
+            /          .comment
+            /            .img-thumbnail
+            /              = image_tag "avatar.jpg", alt: "Avatar", class: "avatar"
+            /            .comment-block
+            /              .comment-arrow
+            /              span.comment-by
+            /              p
+            /                | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae, gravida pellentesque urna varius vitae.
+            /              span.date.pull-right
+            /                | January 12, 2013 at 1:38 pm -
+            /                strong
+            /                  | - John Doe
+            /      ul.comments.reply
+            /        li
+            /          .comment
+            /            .img-thumbnail
+            /              = image_tag "avatar.jpg", alt: "Avatar", class: "avatar"
+            /            .comment-block
+            /              .comment-arrow
+            /              span.comment-by
+            /              p
+            /                | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae, gravida pellentesque urna varius vitae.
+            /              span.date.pull-right
+            /                | January 12, 2013 at 1:38 pm -
+            /                strong
+            /                  | - John Doe
+
+        .post-block.post-answers
+          h3
+            i.icon.icon-bullhorn
+            | Answers (#{@question.answers.count})
+
+        = render 'answers'
+
+
+        .post-block.post-leave-comment
+          h3
+            | Leave a answer
+          = form_for [@question, @answer] do |f|
+            .row
+              .form-group
+                .col-md-12
+                  = f.label :body, 'Your answer'
+                  = f.text_area :body, class: 'form-control', rows: '10'
+            .row
+              .col-md-12
+                = f.submit 'Create', class: 'btn btn-primary btn-lg', 'data-loading-text': 'Loading...'
+
+    = render 'show_left'
