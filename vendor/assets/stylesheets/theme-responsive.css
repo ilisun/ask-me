@@ -246,7 +246,7 @@ Version: 		3.1.1
 
   /* Logo */
 	#header h1.logo img {
-		max-width: 180px;
+		max-width: 256px;
 	}
 
 	#header.center h1.logo {

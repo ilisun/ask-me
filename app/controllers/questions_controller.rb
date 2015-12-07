@@ -16,30 +16,43 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+    if current_user != @question.user
+      flash[:alert] = 'You are not the author of this question!'
+      redirect_to questions_path
+    end
   end
 
   def create
-    @question = Question.create(questions_params)
+    @question = current_user.questions.create(questions_params)
 
     if @question.save
       flash[:notice] = 'Your question successfully created.'
       redirect_to @question
     else
+      flash[:alert] = 'Your question is incorrect.'
       render :new
     end
   end
 
   def update
     if @question.update(questions_params)
+      flash[:notice] = 'Your question successfully fixed.'
       redirect_to @question
     else
+      flash[:alert] = 'Your question is incorrect.'
       render :edit
     end
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path
+    if current_user == @question.user
+      @question.destroy
+      flash[:notice] = 'Your question is successfully deleted.'
+      redirect_to questions_path
+    else
+      flash[:alert] = 'You are not the author of this question!'
+      redirect_to questions_path
+    end
   end
 
   private

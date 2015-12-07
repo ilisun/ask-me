@@ -11,16 +11,26 @@
         p = answer.body
 
         .post-meta
+          .left-span#answer-link
+            span
+              a[href="#"]
+                | add comment
+            - if user_signed_in? and current_user == answer.user
+              span
+                = link_to 'delete', @question, class: 'grey-link', method: :delete, data: {confirm: "Are you sure?"}
+              span
+                = link_to 'edit', edit_question_answer_path(answer.question, answer), class: 'grey-link'
+
           span
             i.icon.icon-user
-            |  By
+            | By &nbsp
             a[href="#"]
               | John Doe
           span
             i.icon.icon-tag
             a[href="#"]
               | Duis
-            | ,
+            | , &nbsp
             a[href="#"]
               | News
 

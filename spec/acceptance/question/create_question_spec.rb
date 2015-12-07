@@ -12,12 +12,20 @@ feature 'Create question', %q{
   scenario 'Authenticated user create the question' do
     sign_in(user)
 
+    create_question
+
+    expect(page).to have_content 'Your question successfully created.'
+  end
+
+  scenario 'Authenticated user create invalid question' do
+    sign_in(user)
+
     visit questions_path
     click_on 'Ask question'
-    fill_in 'Title', with: 'Test question'
-    fill_in 'Body', with: 'text text text'
+    fill_in 'Title', with: ' '
     click_on 'Create'
-    expect(page).to have_content 'Your question successfully created.'
+
+    expect(page).to have_content 'Your question is incorrect.'
   end
 
   scenario 'Non-authenticated user try to create question' do

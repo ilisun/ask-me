@@ -24,6 +24,7 @@ end
 group :test do
   gem 'shoulda-matchers', '>= 3.0.0', require: false
   gem 'capybara'
+  gem 'capybara-webkit'
   gem 'launchy'
   gem 'database_cleaner'
 end

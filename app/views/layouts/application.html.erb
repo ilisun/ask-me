@@ -10,6 +10,8 @@
     <!-- Web Fonts  -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800%7CShadows+Into+Light" rel="stylesheet" type="text/css">
 
+    <%= favicon_link_tag 'favicon.png', type: 'image/png'%>
+
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
@@ -17,8 +19,7 @@
 
   <body>
     <div class="body">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+      <%= flash_messages %>
       <%= render 'layouts/header' %>
 
       <div role="main" class="main">

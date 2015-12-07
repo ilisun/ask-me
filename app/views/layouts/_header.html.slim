@@ -1,7 +1,7 @@
 header#header
   .container
     h1.logo
-      = link_to questions_path, method: :get
+      = link_to root_path
         = image_tag("logo.png", alt: "Ask me...", width: '256', height: '56', 'data-sticky-width': '183', 'data-sticky-height': '40')
     .search
       form#searchForm[action="page-search-results.html" method="get"]

@@ -14,6 +14,16 @@ Version: 		3.1.1
 	margin: -10px 0 20px;
 }
 
+/* Link */
+
+.grey-link {
+	color: #777777;
+}
+.grey-link:hover {
+	color: #5d5d5d;
+}
+
+
 /* Post */
 article.post h2 a {
 	text-decoration: none;
@@ -22,9 +32,16 @@ article.post h2 a {
 article.post .post-meta {
 	font-size: 0.9em;
 	margin-bottom: 7px;
+	text-align: left;
 }
 
 article.post .post-meta > span {
+	display: inline-block;
+	padding-right: 8px;
+}
+
+article.post .post-meta .left-span > span {
+	float: right;
 	display: inline-block;
 	padding-right: 8px;
 }

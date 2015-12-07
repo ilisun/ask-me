@@ -1022,7 +1022,7 @@ Version: 		3.1.1
 
 	Core.initialize();
 
-	$(window).load(function () {
+	$(document).ready(function () {
 
 		// Sticky Meny
 		Core.stickyMenu();

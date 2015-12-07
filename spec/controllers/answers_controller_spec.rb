@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
 
+  sign_in_user
+  let(:question) { create(:question, user_id: @user.id) }
+
   describe 'POST #create' do
-    let(:question) { create :question }
 
     context 'with valid attributes' do
       it 'saves the new answer in the database' do
@@ -23,7 +25,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'render crate template' do
         post :create, answer: attributes_for(:invalid_answer), question_id: question
-        expect(response).to redirect_to question_path(question)
+        expect(response).to render_template "questions/show"
       end
     end
   end

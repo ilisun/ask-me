@@ -31,9 +31,8 @@
                 span
                   i.icon.icon-comments
                   a[href="#"]
-                    | 12 Comments
-                a.btn.btn-xs.btn-primary.pull-right[href="#"]
-                  | Read more...
+                    | #{question.answers.count} Answers
+                = link_to 'Read more...', question, class: 'btn btn-xs btn-primary pull-right'
 
 
         ul.pagination.pagination-lg.pull-right

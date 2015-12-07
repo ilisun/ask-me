@@ -3,13 +3,8 @@
     .col-md-2
     .col-md-8
       h3
-        | Edit your Question
-      = form_for @question, method: :patch do |f|
-        .row
-          .form-group
-            .col-md-12
-              = f.label :title
-              = f.text_field :title, class: 'form-control'
+        | Edit your Answer
+      = form_for [@answer.question, @answer], method: :patch do |f|
         .row
           .form-group
             .col-md-12

@@ -15,18 +15,31 @@
             p = @question.body
 
             .post-meta
+              .left-span#question-link
+                span
+                  a[href="#"]
+                    | add comment
+                - if user_signed_in? and current_user == @question.user
+                  span
+                    = link_to 'delete', @question, class: 'grey-link', method: :delete, data: {confirm: "Are you sure?"}
+                  span
+                    = link_to 'edit', edit_question_path(@question), class: 'grey-link'
+
               span
                 i.icon.icon-user
-                |  By
+                | By &nbsp
                 a[href="#"]
                   | John Doe
               span
                 i.icon.icon-tag
                 a[href="#"]
                   | Duis
-                | ,
+                | , &nbsp
                 a[href="#"]
                   | News
+
+
+
 
 
             /.post-block.post-comments.clearfix
@@ -66,7 +79,7 @@
             i.icon.icon-bullhorn
             | Answers (#{@question.answers.count})
 
-        = render 'answers'
+        = render 'questions/answers'
 
 
         .post-block.post-leave-comment
@@ -82,4 +95,4 @@
               .col-md-12
                 = f.submit 'Create', class: 'btn btn-primary btn-lg', 'data-loading-text': 'Loading...'
 
-    = render 'show_left'
+    = render 'questions/show_left'
