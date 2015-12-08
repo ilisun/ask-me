@@ -17,7 +17,7 @@
                 | add comment
             - if user_signed_in? and current_user == answer.user
               span
-                = link_to 'delete', @question, class: 'grey-link', method: :delete, data: {confirm: "Are you sure?"}
+                = link_to 'delete', question_answer_path(answer.question, answer), class: 'grey-link', method: :delete, data: {confirm: "Are you sure?"}
               span
                 = link_to 'edit', edit_question_answer_path(answer.question, answer), class: 'grey-link'
 

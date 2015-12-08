@@ -26,10 +26,20 @@ class AnswersController < ApplicationController
   def update
     if @answer.update(answer_params)
       flash[:notice] = 'Your answer successfully fixed.'
-      redirect_to @question
+      redirect_to question_path(@question)
     else
       flash[:alert] = 'Your answer is incorrect.'
       render 'edit'
+    end
+  end
+
+  def destroy
+    if current_user != @answer.user
+      flash[:alert] = 'You are not the author of this answer!'
+      redirect_to questions_path
+    else
+      @answer.destroy
+      redirect_to question_path(@question)
     end
   end
 

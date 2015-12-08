@@ -1,10 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
+
   sign_in_user
   let(:question) { create(:question, user_id: @user.id) }
-
-
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
