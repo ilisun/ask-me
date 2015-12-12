@@ -38,6 +38,12 @@
                 a[href="#"]
                   | News
 
+            - if @question.attachments.present?
+              h6 Attachments:
+              ul
+                - @question.attachments.each do |a|
+                  li = link_to a.file.identifier, a.file.url
+
 
 
 
@@ -78,6 +84,7 @@
           h3
             i.fa.fa-bullhorn
             | Answers (#{@question.answers.count})
+
         .answers
           = render 'answers/answers'
 
@@ -90,6 +97,9 @@
                 .col-md-12
                   = f.label :body, 'Your answer'
                   = f.text_area :body, class: 'form-control', rows: '10'
+
+            = render 'questions/add_files', :f => f
+
             .row
               .col-md-12
                 = f.submit 'Create', class: 'btn btn-primary btn-lg', 'data-loading-text': 'Loading...'

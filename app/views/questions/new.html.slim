@@ -15,6 +15,9 @@
             .col-md-12
               = f.label :body
               = f.text_area :body, class: 'form-control', rows: '10'
+
+        = render 'questions/add_files', :f => f
+
         .row
           .col-md-12
             = f.submit 'Create', class: 'btn btn-primary btn-lg', 'data-loading-text': 'Loading...'

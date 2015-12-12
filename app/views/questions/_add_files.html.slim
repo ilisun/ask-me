@@ -1,0 +1,8 @@
+.row
+  .form-group
+    .col-md-12
+      p Attachments:
+      p
+        = f.fields_for :attachments do |a|
+          = a.label :file
+          = a.file_field :file

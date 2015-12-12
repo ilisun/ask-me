@@ -7,6 +7,13 @@
 # Ignore bundler config.
 /.bundle
 
+# Ignore uploaded files
+/public/system
+/public/tmp
+/public/uploads
+/public/spec
+
+
 # Ignore all logfiles and tempfiles.
 /log/*
 !/log/.keep
