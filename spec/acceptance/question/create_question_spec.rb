@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../acceptance_helper'
 
 feature 'Create question', %q{
   In order to get answer from community
@@ -25,7 +25,7 @@ feature 'Create question', %q{
     fill_in 'Title', with: ' '
     click_on 'Create'
 
-    expect(page).to have_content 'Your question is incorrect.'
+    expect(page).to have_content "ERROR: Title can't be blank and Body can't be blank"
   end
 
   scenario 'Non-authenticated user try to create question' do

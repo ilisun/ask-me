@@ -48,14 +48,14 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #edit' do
-    before { get :edit, id: question }
+    before { get :'edit', id: question }
 
     it 'assings the requested question to @question' do
       expect(assigns(:question)).to eq question
     end
 
     it 'renders edit view' do
-      expect(response).to render_template :edit
+      expect(response).to render_template :'edit'
     end
   end
 
@@ -113,7 +113,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 're-renders edit view' do
-        expect(response).to render_template :edit
+        expect(response).to render_template :'edit'
       end
     end
   end

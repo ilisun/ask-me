@@ -1,7 +1,7 @@
 .container
   .row
     .col-md-9
-      .blog-posts.single-post.answers
+      .blog-posts.single-post
         article.post.post-large.blog-single-post
           .post-date
             span.day
@@ -26,12 +26,12 @@
                     = link_to 'edit', edit_question_path(@question), class: 'grey-link'
 
               span
-                i.icon.icon-user
+                i.fa.fa-user
                 | By &nbsp
                 a[href="#"]
                   | John Doe
               span
-                i.icon.icon-tag
+                i.fa.fa-tag
                 a[href="#"]
                   | Duis
                 | , &nbsp
@@ -76,16 +76,15 @@
 
         .post-block.post-answers
           h3
-            i.icon.icon-bullhorn
+            i.fa.fa-bullhorn
             | Answers (#{@question.answers.count})
-
-        = render 'questions/answers'
-
+        .answers
+          = render 'answers/answers'
 
         .post-block.post-leave-comment
           h3
             | Leave a answer
-          = form_for [@question, @answer] do |f|
+          = form_for [@question, @answer], remote: true do |f|
             .row
               .form-group
                 .col-md-12

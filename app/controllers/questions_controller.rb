@@ -29,7 +29,7 @@ class QuestionsController < ApplicationController
       flash[:notice] = 'Your question successfully created.'
       redirect_to @question
     else
-      flash[:alert] = 'Your question is incorrect.'
+      flash[:error] = 'ERROR: ' + @question.errors.full_messages.to_sentence
       render :new
     end
   end

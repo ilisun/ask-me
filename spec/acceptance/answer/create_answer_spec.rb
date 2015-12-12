@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../acceptance_helper'
 
 feature 'User answer', %q{
   In order to exchange my knowledge
@@ -9,7 +9,7 @@ feature 'User answer', %q{
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  scenario 'Authenticated user create answer' do
+  scenario 'Authenticated user create answer', js: true do
     sign_in(user)
 
     create_answer(question)
@@ -20,10 +20,12 @@ feature 'User answer', %q{
     end
   end
 
-  scenario 'Authenticated user tries to create invalid answer' do
+  scenario 'Authenticated user tries to create invalid answer', js: true do
     sign_in(user)
     visit question_path(question)
+    fill_in 'Your answer', with: 'body'
     click_on 'Create'
+    expect(page).to have_content "ERROR: Body is too short (minimum is 10 characters)"
   end
 
   scenario 'Non-authenticated user tries to visit question page' do

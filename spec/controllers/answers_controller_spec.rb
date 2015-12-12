@@ -12,80 +12,54 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with valid attributes' do
       it 'saves the new answer in the database' do
-        expect { post :create, answer: attributes_for(:answer), question_id: question}.to change(question.answers, :count).by(1)
+        expect { post :create, answer: attributes_for(:answer), question_id: question, format: :js }.to change(question.answers, :count).by(1)
       end
 
       it 'render create template' do
-        post :create, answer: attributes_for(:answer), question_id: question
-        expect(response).to redirect_to question_path(question)
+        post :create, answer: attributes_for(:answer), question_id: question, format: :js
+        expect(response).to render_template :create
       end
     end
 
     context 'with invalid attributes' do
       it 'does not save the question' do
-        expect { post :create, answer: attributes_for(:invalid_answer), question_id: question}.to_not change(Answer, :count)
+        expect { post :create, answer: attributes_for(:invalid_answer), question_id: question, format: :js }.to_not change(Answer, :count)
       end
 
       it 'render crate template' do
-        post :create, answer: attributes_for(:invalid_answer), question_id: question
-        expect(response).to render_template "questions/show"
+        post :create, answer: attributes_for(:invalid_answer), question_id: question, format: :js
+        expect(response).to render_template "answers/create"
       end
     end
 
-  end
-
-  describe 'GET #edit' do
-
-    context 'when he is author of answer' do
-      before { get :edit, id: answer, question_id: question }
-
-      it 'assings the requested answer to @answer' do
-        expect(assigns(:answer)).to eq answer
-      end
-
-      it 'renders edit view' do
-        expect(response).to render_template :edit
-      end
-    end
-
-    context 'when he is not author of answer' do
-      before { get :edit, id: another_answer, question_id: question }
-
-      it 'assings the requested answer to @answer' do
-        expect(assigns(:another_answer)).to_not eq another_answer
-      end
-      it 'renders edit view' do
-        expect(response).to redirect_to questions_path
-      end
-    end
   end
 
   describe 'PATCH #update' do
     context 'with valid attributes' do
       it 'assigns the requested answer to @answer' do
-        patch :update, id: answer, question_id: question, answer: attributes_for(:answer)
+        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
         expect(assigns(:answer)).to eq answer
       end
 
       it 'assigns the requested question to @question' do
-        patch :update, id: answer, question_id: question, answer: attributes_for(:answer)
+        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
         expect(assigns(:question)).to eq question
       end
 
       it 'changes answer attributes' do
-        patch :update, id: answer, question_id: question, answer: { body: 'new body new body new body' }
+        patch :update, id: answer, question_id: question, answer: { body: 'new body new body new body' }, format: :js
         answer.reload
         expect(answer.body).to eq 'new body new body new body'
       end
 
       it 'render update template' do
-        patch :update, id: answer, question_id: question, answer: attributes_for(:answer)
-        expect(response).to redirect_to question_path(question)
+        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+        expect(response.status).to eq 200
       end
     end
 
     context 'with invalid attributes' do
-      before { patch :update, id: answer, answer: {body: nil}, question_id: question }
+      before { patch :update, id: answer, answer: {body: nil}, question_id: question, format: :js }
 
       it 'does not changes answer attributes' do
         answer.reload
@@ -93,7 +67,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       it 'render update template' do
-        expect(response).to render_template :edit
+        expect(response).to render_template :update
       end
     end
   end

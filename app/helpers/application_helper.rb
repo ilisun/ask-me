@@ -14,6 +14,7 @@ module ApplicationHelper
                concat message
              end)
     end
+    flash.discard
     nil
   end
 

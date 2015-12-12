@@ -20,7 +20,7 @@ Version: 		3.1.1
 							})
 							.append(
 								$("<i />")
-									.addClass("icon icon-chevron-up icon-white")
+									.addClass("fa fa-chevron-up icon-white")
 							));
 
 			$("#scrollToTop").click(function(e) {

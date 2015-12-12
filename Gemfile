@@ -10,6 +10,7 @@ gem 'turbolinks'
 gem 'jquery-turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'font-awesome-rails'
 
 gem 'slim-rails'
 gem 'devise'
@@ -18,15 +19,15 @@ gem 'devise'
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem 'byebug'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'database_cleaner'
+  gem 'capybara-webkit'
 end
 
 group :test do
   gem 'shoulda-matchers', '>= 3.0.0', require: false
-  gem 'capybara'
-  gem 'capybara-webkit'
-  gem 'launchy'
-  gem 'database_cleaner'
+
 end
 
 group :development do

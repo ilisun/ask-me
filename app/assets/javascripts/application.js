@@ -14,7 +14,7 @@
 
 
 // automatically hide notification
-$(function() {
+$(document).on('page:update', function () {
     var flashCallback;
     flashCallback = function() {
         return $(".alert").fadeOut();

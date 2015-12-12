@@ -1,9 +1,9 @@
 /*
- *= require_tree .
+ *= require_self
+ *= require font-awesome
 
  * Libs CSS
  *= require bootstrap/css/bootstrap
- *= require font-awesome/css/font-awesome
  * Theme CSS
  *= require theme
  *= require theme-elements
@@ -13,5 +13,6 @@
  * Skin CSS
  *= require skins/default
 
- *= require_self
+ *= require_tree .
  */
+

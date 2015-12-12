@@ -19,20 +19,31 @@
               span
                 = link_to 'delete', question_answer_path(answer.question, answer), class: 'grey-link', method: :delete, data: {confirm: "Are you sure?"}
               span
-                = link_to 'edit', edit_question_answer_path(answer.question, answer), class: 'grey-link'
+                = link_to 'edit', '', class: 'grey-link edit-answer-link', data: { answer_id: answer.id }, remote: true
 
           span
-            i.icon.icon-user
+            i.fa.fa-user
             | By &nbsp
             a[href="#"]
               | John Doe
           span
-            i.icon.icon-tag
+            i.fa.fa-tag
             a[href="#"]
               | Duis
             | , &nbsp
             a[href="#"]
               | News
+
+      = form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+        .row
+          .form-group
+            .col-md-12
+              = f.label :body, 'Edit answer'
+              = f.text_area :body, class: 'form-control text-ara-grey', rows: '10'
+        .row
+          .col-md-12
+            = f.submit 'Save', class: 'btn btn-primary btn-lg', 'data-loading-text': 'Loading...'
+
 
         /.post-block.post-comments.clearfix
         /
