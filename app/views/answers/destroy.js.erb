@@ -3,7 +3,11 @@
     $('.body').prepend('<%= j render 'layouts/flash_messages' %>');
   <% end %>
 <% else %>
-  $('.answers').html('<%= j render 'answers/answers' %>');
-  $('#new_answer_body').val('');
+  $('.destroy-answer-link').click(function(e) {
+    var answer_id;
+    e.preventDefault();
+    answer_id = $(this).data('answerId');
+    $('article#article-' + answer_id).remove();
+  });
   $('.body').prepend('<%= j render 'layouts/flash_messages' %>');
 <% end %>

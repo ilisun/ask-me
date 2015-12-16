@@ -10,6 +10,7 @@ class QuestionsController < ApplicationController
   def show
     @answer = @question.answers.build
     @answer.attachments.build
+
   end
 
   def new
@@ -18,6 +19,7 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+    @question.attachments.build
     if current_user != @question.user
       flash[:alert] = 'You are not the author of this question!'
       redirect_to questions_path
@@ -64,6 +66,6 @@ class QuestionsController < ApplicationController
   end
 
   def questions_params
-    params.require(:question).permit(:title, :body, attachments_attributes: [:file])
+    params.require(:question).permit(:title, :body, attachments_attributes: [:file, :id, :_destroy])
   end
 end

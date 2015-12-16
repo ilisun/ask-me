@@ -43,7 +43,7 @@ article.post .post-meta > span {
 article.post .post-meta .left-span > span {
 	float: right;
 	display: inline-block;
-	padding-right: 8px;
+	padding-left: 8px;
 }
 
 article.post .post-meta i {

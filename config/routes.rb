@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     resources :answers
   end
 
+  resources :attachments, only: :destroy
+
   root to: 'questions#index'
 
 end

@@ -2717,3 +2717,11 @@ ul.history li .featured-box .box-content {
 .alert .close {
 	padding-left: 20px;
 }
+
+.right {
+	float: right;
+}
+
+.btn {
+	margin-right: 20px;
+}

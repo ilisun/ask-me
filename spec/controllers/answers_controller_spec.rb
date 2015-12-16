@@ -77,12 +77,12 @@ RSpec.describe AnswersController, type: :controller do
       before { answer }
 
       it 'deletes question' do
-        expect { delete :destroy, id: answer, question_id: question }.to change(Answer, :count).by(-1)
+        expect { delete :destroy, id: answer, question_id: question, format: :js }.to change(Answer, :count).by(-1)
       end
 
-      it 'redirect to index view' do
-        delete :destroy, id: answer, question_id: question
-        expect(response).to redirect_to answer.question
+      it 'render deletes template' do
+        delete :destroy, id: answer, question_id: question, format: :js
+        expect(response.status).to eq 200
       end
     end
 
@@ -90,12 +90,12 @@ RSpec.describe AnswersController, type: :controller do
       before { another_answer }
 
       it 'deletes question' do
-        expect { delete :destroy, id: another_answer, question_id: question }.to change(Answer, :count).by(0)
+        expect { delete :destroy, id: another_answer, question_id: question, format: :js }.to change(Answer, :count).by(0)
       end
 
-      it 'redirect to index view' do
-        delete :destroy, id: another_answer, question_id: question
-        expect(response).to redirect_to questions_path
+      it 'render deletes template' do
+        delete :destroy, id: another_answer, question_id: question, format: :js
+        expect(response.status).to eq 200
       end
     end
   end

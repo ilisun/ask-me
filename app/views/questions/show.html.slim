@@ -2,50 +2,41 @@
   .row
     .col-md-9
       .blog-posts.single-post
-        article.post.post-large.blog-single-post
-          .post-date
-            span.day
-              | 10
-            span.month
-              | Jan
-          .post-content
-            h2
-              = @question.title
-
-            p = @question.body
-
-            .post-meta
-              .left-span#question-link
+        .question
+          article.post.post-large.blog-single-post
+            .post-date
+              span.day
+                | 10
+              span.month
+                | Jan
+            .post-content
+              h2
+                = @question.title
+              p = @question.body
+              .post-meta
+                .left-span#question-link
+                  span
+                    a[href="#"]
+                      | add comment
+                  - if user_signed_in? and current_user == @question.user
+                    span
+                      = link_to 'delete', @question, class: 'grey-link', method: :delete, data: {confirm: "Are you sure?"}
+                    span
+                      = link_to 'edit', edit_question_path(@question), class: 'grey-link'
                 span
+                  i.fa.fa-user
+                  | By &nbsp
                   a[href="#"]
-                    | add comment
-                - if user_signed_in? and current_user == @question.user
-                  span
-                    = link_to 'delete', @question, class: 'grey-link', method: :delete, data: {confirm: "Are you sure?"}
-                  span
-                    = link_to 'edit', edit_question_path(@question), class: 'grey-link'
+                    | John Doe
+                span
+                  i.fa.fa-tag
+                  a[href="#"]
+                    | Duis
+                  | , &nbsp
+                  a[href="#"]
+                    | News
 
-              span
-                i.fa.fa-user
-                | By &nbsp
-                a[href="#"]
-                  | John Doe
-              span
-                i.fa.fa-tag
-                a[href="#"]
-                  | Duis
-                | , &nbsp
-                a[href="#"]
-                  | News
-
-            - if @question.attachments.present?
-              h6 Attachments:
-              ul
-                - @question.attachments.each do |a|
-                  li = link_to a.file.identifier, a.file.url
-
-
-
+              = render 'questions/attach_files'
 
 
             /.post-block.post-comments.clearfix
@@ -96,12 +87,13 @@
               .form-group
                 .col-md-12
                   = f.label :body, 'Your answer'
-                  = f.text_area :body, class: 'form-control', rows: '10'
+                  = f.text_area :body, class: 'form-control', id: 'new_answer_body', rows: '10'
 
             = render 'questions/add_files', :f => f
 
             .row
               .col-md-12
                 = f.submit 'Create', class: 'btn btn-primary btn-lg', 'data-loading-text': 'Loading...'
+                = link_to 'All questions', questions_path, class: 'btn btn-default btn-lg'
 
     = render 'questions/show_left'

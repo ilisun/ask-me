@@ -1,6 +1,6 @@
 - @question.answers.each do |answer|
   - if answer.persisted?
-    article.post.post-large.blog-single-post
+    = content_tag "article", class: "post post-large blog-single-post", id: "article-#{answer.id}"
       .post-date
         span.day
           | 10
@@ -17,7 +17,8 @@
                 | add comment
             - if user_signed_in? and current_user == answer.user
               span
-                = link_to 'delete', question_answer_path(answer.question, answer), class: 'grey-link', method: :delete, data: {confirm: "Are you sure?"}
+                / TODO Убрал confirm т.к. не знаю как передать его значение ответа в скрипт
+                = link_to 'delete', question_answer_path(answer.question, answer), class: 'grey-link destroy-answer-link', method: :delete, data: { answer_id: answer.id }, remote: true
               span
                 = link_to 'edit', '', class: 'grey-link edit-answer-link', data: { answer_id: answer.id }, remote: true
 
@@ -38,7 +39,10 @@
           h6 Attachments:
           ul
             - answer.attachments.each do |a|
-              li = link_to a.file.identifier, a.file.url
+              li
+                = link_to a.file.identifier, a.file.url
+                .right
+                  = link_to '&times;'.html_safe, attachment_path(a), class: 'grey-link', method: :delete, data: {confirm: "Are you sure?"}
 
       = form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
         .row
@@ -46,9 +50,14 @@
             .col-md-12
               = f.label :body, 'Edit answer'
               = f.text_area :body, class: 'form-control text-ara-grey', rows: '10'
+
+        / TODO Не знаю пока как забилдить вложение, что б при редактировании ответа можно было выбирать файл
+        /= render 'questions/add_files', :f => f
+
         .row
           .col-md-12
-            = f.submit 'Save', class: 'btn btn-primary btn-lg', 'data-loading-text': 'Loading...'
+            = f.submit 'Save', class: 'btn btn-primary', 'data-loading-text': 'Loading...'
+            = link_to 'Close', '', class: 'close-edit-answer', data: { answer_id: answer.id }
 
 
         /.post-block.post-comments.clearfix

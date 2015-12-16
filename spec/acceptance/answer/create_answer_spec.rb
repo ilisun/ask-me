@@ -11,7 +11,7 @@ feature 'User answer', %q{
 
   scenario 'Authenticated user create answer', js: true do
     sign_in(user)
-
+    visit question_path(question)
     create_answer(question)
 
     expect(current_path).to eq question_path(question)
@@ -23,13 +23,14 @@ feature 'User answer', %q{
   scenario 'Authenticated user tries to create invalid answer', js: true do
     sign_in(user)
     visit question_path(question)
-    fill_in 'Your answer', with: 'body'
+    fill_in 'answer[body]', with: 'body'
     click_on 'Create'
     expect(page).to have_content "ERROR: Body is too short (minimum is 10 characters)"
   end
 
   scenario 'Non-authenticated user tries to visit question page' do
     create_answer(question)
+
     expect(current_path).to eq new_user_session_path
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end

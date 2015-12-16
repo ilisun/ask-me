@@ -4,5 +4,6 @@
       p Attachments:
       p
         = f.fields_for :attachments do |a|
-          = a.label :file
-          = a.file_field :file
+          - if a.object.new_record?
+            = a.label :file
+            = a.file_field :file

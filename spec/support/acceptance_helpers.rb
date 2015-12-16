@@ -17,7 +17,7 @@ module AcceptanceHelper
 
   def create_answer(question)
     visit question_path(question)
-    fill_in 'Your answer', with: 'My answer My answer'
+    fill_in 'answer[body]', with: 'My answer My answer'
     click_on 'Create'
   end
 

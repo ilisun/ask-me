@@ -19,7 +19,6 @@ class AnswersController < ApplicationController
   end
 
   def update
-
     if @answer.update(answer_params)
       flash[:notice] = 'Your answer successfully fixed.'
       # redirect_to question_path(@question)
@@ -32,10 +31,11 @@ class AnswersController < ApplicationController
   def destroy
     if current_user == @answer.user
       @answer.destroy
-      redirect_to question_path(@question)
+      flash[:notice] = 'Your answer is successfully deleted.'
+      # redirect_to question_path(@question)
     else
       flash[:alert] = 'You are not the author of this answer!'
-      redirect_to questions_path
+      # redirect_to questions_path
     end
   end
 
@@ -50,7 +50,7 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, attachments_attributes: [:file])
+    params.require(:answer).permit(:body, attachments_attributes: [:file, :id, :_destroy])
   end
 
 end
