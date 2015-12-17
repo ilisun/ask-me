@@ -5,5 +5,6 @@
       - if !a.new_record?
         = content_tag "li", id: "attach-#{a.id}"
           = link_to a.file.identifier, a.file.url
-          .right
-            = link_to '&times;'.html_safe, attachment_path(a), class: 'grey-link destroy-attach-link', data: { attach_id: a.id }, method: :delete, remote: true
+          - if user_signed_in? and current_user == @question.user
+            .right
+              = link_to '&times;'.html_safe, attachment_path(a), class: 'grey-link destroy-attach-link', data: { attach_id: a.id }, method: :delete, remote: true

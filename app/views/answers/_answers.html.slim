@@ -36,23 +36,36 @@
               | News
 
         - if answer.attachments.present?
-          h6 Attachments:
+          h6 Add files:
           ul
             - answer.attachments.each do |a|
-              li
-                = link_to a.file.identifier, a.file.url
-                .right
-                  = link_to '&times;'.html_safe, attachment_path(a), class: 'grey-link', method: :delete, data: {confirm: "Are you sure?"}
+              - if !a.new_record?
+                = content_tag "li", id: "attach-#{a.id}"
+                  = link_to a.file.identifier, a.file.url
+                  - if user_signed_in? and current_user == @question.user
+                    .right
+                      = link_to '&times;'.html_safe, attachment_path(a), class: 'grey-link destroy-attach-link', data: {attach_id: a.id}, method: :delete, remote: true
 
-      = form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+      = nested_form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
         .row
           .form-group
             .col-md-12
               = f.label :body, 'Edit answer'
               = f.text_area :body, class: 'form-control text-ara-grey', rows: '10'
 
-        / TODO Не знаю пока как забилдить вложение, что б при редактировании ответа можно было выбирать файл
-        /= render 'questions/add_files', :f => f
+        .row
+          .form-group
+            .col-md-12
+              p Attachments:
+              p
+                = f.fields_for :attachments, @answer.attachments.build do |a|
+                  - if a.object.new_record?
+                    .right
+                      = a.link_to_remove "delete file", class: 'grey-link'
+                    = a.label :file
+                    = a.file_field :file
+
+                = f.link_to_add "add file", :attachments, class: 'grey-link'
 
         .row
           .col-md-12

@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/ryanb/nested_form.git
+  revision: 1b0689dfb4d230ceabd278eba159fcb02f23c68a
+  specs:
+    nested_form (0.3.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -171,6 +177,9 @@ GEM
       rdoc (~> 4.0)
     shoulda-matchers (3.0.1)
       activesupport (>= 4.0.0)
+    simple_form (3.2.0)
+      actionpack (~> 4.0)
+      activemodel (~> 4.0)
     slim (3.0.6)
       temple (~> 0.7.3)
       tilt (>= 1.3.3, < 2.1)
@@ -224,6 +233,7 @@ DEPENDENCIES
   jquery-rails
   jquery-turbolinks
   launchy
+  nested_form!
   pg
   rails (= 4.2.4)
   remotipart
@@ -231,6 +241,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   shoulda-matchers (>= 3.0.0)
+  simple_form
   slim-rails
   spring
   turbolinks

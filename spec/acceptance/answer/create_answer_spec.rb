@@ -1,6 +1,6 @@
 require_relative '../acceptance_helper'
 
-feature 'User answer', %q{
+feature 'Create answer', %q{
   In order to exchange my knowledge
   As an authenticated user
   I want to be able to create answers

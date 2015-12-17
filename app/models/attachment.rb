@@ -1,5 +1,8 @@
 class Attachment < ActiveRecord::Base
-  belongs_to :attachmentable, polymorphic: true
+
+  default_scope { order(created_at: :asc) }
+
+  belongs_to :attachmentable, polymorphic: true, touch: true
 
   mount_uploader :file, FileUploader
 

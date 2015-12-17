@@ -29,6 +29,7 @@ feature 'Edit question', %q{
       fill_in 'Title', with: "New title for question"
       fill_in 'Body', with: "New body for question"
       click_on 'Save'
+
       expect(current_path).to eq question_path(question)
       expect(page).to have_content 'Your question successfully fixed.'
       expect(page).to have_content 'New title for question'

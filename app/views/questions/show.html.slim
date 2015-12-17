@@ -82,7 +82,7 @@
         .post-block.post-leave-comment
           h3
             | Leave a answer
-          = form_for [@question, @answer], remote: true do |f|
+          = nested_form_for [@question, @answer], remote: true do |f|
             .row
               .form-group
                 .col-md-12

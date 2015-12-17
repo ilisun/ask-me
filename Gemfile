@@ -13,9 +13,11 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'font-awesome-rails'
 
 gem 'slim-rails'
+gem 'simple_form'
 gem 'devise'
 gem 'carrierwave'
 gem 'remotipart'
+gem 'nested_form', git: 'git://github.com/ryanb/nested_form.git'
 
 
 group :development, :test do

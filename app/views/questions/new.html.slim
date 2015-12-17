@@ -4,7 +4,7 @@
     .col-md-8
       h3
         | Ask a Question
-      = form_for @question do |f|
+      = nested_form_for @question do |f|
         .row
           .form-group
             .col-md-12
@@ -16,7 +16,20 @@
               = f.label :body
               = f.text_area :body, class: 'form-control', rows: '10'
 
-        = render 'questions/add_files', :f => f
+        /= render 'questions/add_files', :f => f
+        .row
+          .form-group
+            .col-md-12
+              p Attachments:
+              p
+                = f.fields_for :attachments do |a|
+                  - if a.object.new_record?
+                    .right
+                      = a.link_to_remove "delete file", class: 'grey-link'
+                    = a.label :file
+                    = a.file_field :file
+
+                = f.link_to_add "add file", :attachments, class: 'grey-link'
 
         .row
           .col-md-12
