@@ -47,6 +47,9 @@ gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', require: nil
 gem 'sidetiq'
 
+gem 'dotenv'
+gem 'dotenv-deployment', require: 'dotenv/deployment'
+
 
 group :development, :test do
   gem 'rspec-rails'
@@ -65,5 +68,10 @@ end
 group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
+
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
 end
 
