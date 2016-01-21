@@ -1,0 +1,14 @@
+form id="new-answer-comment-{{parent_id}}" class="new_comment" action="/{{parent_type}}/{{parent_id}}/comments" accept-charset="UTF-8" data-remote="true" data-type="json" method="post"
+  input name="utf8" type="hidden" value="✓"
+  .row
+    .form-group
+      .col-md-12
+        label for="comment_body"
+          | Comment
+        textarea class="form-control text-ara-grey" rows="5" name="comment[body]" id="comment_body"
+
+  .row
+    .col-md-12
+      input type="submit" name="commit" value="Post comment" class="btn btn-primary" data-loading-text="Loading..."
+      button type="button" class="btn close-new-comment" data-answer-id="{{answer.id}}"
+        | Close

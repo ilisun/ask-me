@@ -1,11 +1,13 @@
 class AttachmentsController < ApplicationController
   before_action :load_attachment, only: [:destroy]
 
+  respond_to :json
+  authorize_resource
+
 
   def destroy
     @attachment.destroy
-    flash[:notice] = 'Your attachment is successfully deleted.'
-    # redirect_to :back
+    respond_with(@attachment, json: @attachment)
   end
 
   private

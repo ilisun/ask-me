@@ -1,9 +1,0 @@
-<% if @answer.errors.present? %>
-  <% @answer.errors.full_messages.each do |message| %>
-    $('.body').prepend('<%= j render 'layouts/flash_messages' %>');
-  <% end %>
-<% else %>
-  $('.answers').html('<%= j render 'answers/answers' %>');
-  $('#new_answer_body').val('');
-  $('.body').prepend('<%= j render 'layouts/flash_messages' %>');
-<% end %>

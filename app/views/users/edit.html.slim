@@ -1,0 +1,71 @@
+.container
+
+
+
+  .tabs
+    ul.nav.nav-tabs.text-right.tabs-primary
+      li.active
+        a[href="#info-profile" data-toggle="tab"]
+          i.icon.icon-star
+          |  Main info
+      li
+        a[href="#password-profile" data-toggle="tab"]
+          | Change password
+    .tab-content
+      #info-profile.tab-pane.active
+        = form_for @user, :html => {:multipart => true} do |f|
+          .row
+            .col-md-6
+              h2.short
+                strong
+                  | Edit
+                |  My Profile
+              .row
+                .form-group
+                  .col-md-6
+                    = f.label :name
+                    = f.text_field :name, class: 'form-control'
+                  .col-md-6
+                    = f.label :email
+                    = f.text_field :email, class: 'form-control'
+              .row
+                .form-group
+                  .col-md-12
+                    = f.label :about
+                    = f.text_area :about, class: 'form-control', rows: '10'
+            .col-md-6
+              h2.short
+                | My&nbsp
+                strong
+                  | Avatar
+              p
+                = image_tag(@user.avatar.url(:thumb)) if @user.avatar?
+
+              = f.file_field :avatar
+              = f.hidden_field :avatar_cache
+              .checkbox
+                = f.label :remove_avatar
+                = f.check_box :remove_avatar
+
+          = f.submit 'Update Profile', class: 'btn btn-primary btn-lg', 'data-loading-text': 'Loading...'
+
+
+      #password-profile.tab-pane
+        = form_for @user, :html => {:multipart => true} do |f|
+          .row
+            .col-md-6
+              h2.short
+                strong
+                  | Edit
+                |  My Password
+              .row
+                .form-group
+                  .col-md-6
+                    = f.label :password
+                    = f.password_field :password, :autocomplete => "off", class: 'form-control'
+                  .col-md-6
+                    = f.label :password_confirmation
+                    = f.password_field :password_confirmation, class: 'form-control'
+
+          = f.submit 'Update Password', class: 'btn btn-primary btn-lg', 'data-loading-text': 'Loading...'
+

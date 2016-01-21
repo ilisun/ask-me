@@ -12,23 +12,23 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with valid attributes' do
       it 'saves the new answer in the database' do
-        expect { post :create, answer: attributes_for(:answer), question_id: question, format: :js }.to change(question.answers, :count).by(1)
+        expect { post :create, answer: attributes_for(:answer), question_id: question, format: :json }.to change(question.answers, :count).by(1)
       end
 
-      it 'render create template' do
-        post :create, answer: attributes_for(:answer), question_id: question, format: :js
-        expect(response).to render_template :create
+      it 'render json response' do
+        post :create, answer: attributes_for(:answer), question_id: question, format: :json
+        expect(response.status).to eq 201
       end
     end
 
     context 'with invalid attributes' do
       it 'does not save the question' do
-        expect { post :create, answer: attributes_for(:invalid_answer), question_id: question, format: :js }.to_not change(Answer, :count)
+        expect { post :create, answer: attributes_for(:invalid_answer), question_id: question, format: :json }.to_not change(Answer, :count)
       end
 
-      it 'render crate template' do
-        post :create, answer: attributes_for(:invalid_answer), question_id: question, format: :js
-        expect(response).to render_template "answers/create"
+      it 'render json response' do
+        post :create, answer: attributes_for(:invalid_answer), question_id: question, format: :json
+        expect(response.status).to eq 422
       end
     end
 
@@ -37,29 +37,24 @@ RSpec.describe AnswersController, type: :controller do
   describe 'PATCH #update' do
     context 'with valid attributes' do
       it 'assigns the requested answer to @answer' do
-        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :json
         expect(assigns(:answer)).to eq answer
       end
 
-      it 'assigns the requested question to @question' do
-        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
-        expect(assigns(:question)).to eq question
-      end
-
       it 'changes answer attributes' do
-        patch :update, id: answer, question_id: question, answer: { body: 'new body new body new body' }, format: :js
+        patch :update, id: answer, question_id: question, answer: { body: 'new body new body new body' }, format: :json
         answer.reload
         expect(answer.body).to eq 'new body new body new body'
       end
 
       it 'render update template' do
-        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :json
         expect(response.status).to eq 200
       end
     end
 
     context 'with invalid attributes' do
-      before { patch :update, id: answer, answer: {body: nil}, question_id: question, format: :js }
+      before { patch :update, id: answer, answer: {body: nil}, question_id: question, format: :json }
 
       it 'does not changes answer attributes' do
         answer.reload
@@ -67,7 +62,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       it 'render update template' do
-        expect(response).to render_template :update
+        expect(response.status).to eq 422
       end
     end
   end
@@ -77,11 +72,11 @@ RSpec.describe AnswersController, type: :controller do
       before { answer }
 
       it 'deletes question' do
-        expect { delete :destroy, id: answer, question_id: question, format: :js }.to change(Answer, :count).by(-1)
+        expect { delete :destroy, id: answer, question_id: question, format: :json }.to change(Answer, :count).by(-1)
       end
 
       it 'render deletes template' do
-        delete :destroy, id: answer, question_id: question, format: :js
+        delete :destroy, id: answer, question_id: question, format: :json
         expect(response.status).to eq 200
       end
     end
@@ -90,13 +85,31 @@ RSpec.describe AnswersController, type: :controller do
       before { another_answer }
 
       it 'deletes question' do
-        expect { delete :destroy, id: another_answer, question_id: question, format: :js }.to change(Answer, :count).by(0)
+        expect { delete :destroy, id: another_answer, question_id: question, format: :json }.to change(Answer, :count).by(0)
       end
 
       it 'render deletes template' do
-        delete :destroy, id: another_answer, question_id: question, format: :js
-        expect(response.status).to eq 200
+        delete :destroy, id: another_answer, question_id: question, format: :json
+        expect(response.status).to eq 302
       end
+    end
+  end
+
+  describe 'POST #accepted, #unaccepted' do
+    before do
+      answer
+      post :accepted, id: answer
+      answer.reload
+    end
+
+    it 'accepted answer' do
+      expect(answer.accepted).to eq true
+    end
+
+    it 'unaccepted answer' do
+      post :unaccepted, id: answer
+      answer.reload
+      expect(answer.accepted).to eq false
     end
   end
 

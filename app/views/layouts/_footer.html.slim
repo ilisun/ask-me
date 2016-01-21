@@ -8,3 +8,7 @@ footer#footer
           = image_tag("logo-footer.png", alt: "Ask me...", class: "img-responsive")
         .col-md-7
           p © Copyright 2015. All Rights Reserved.
+        - if user_signed_in?
+          .footer-data data={signed_in: "#{user_signed_in?}", user_id: "#{current_user.id}"}
+        - else
+          .footer-data data={signed_in: "#{user_signed_in?}"}

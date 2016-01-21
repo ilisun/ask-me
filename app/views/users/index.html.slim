@@ -1,0 +1,33 @@
+.container
+  .col-md-12.center
+    h2
+      strong
+        | Users&nbsp
+      | list
+
+    hr
+  .row
+    ul.team-list
+      - @users.each do |user|
+        li.col-md-3
+          .team-item.thumbnail
+            = link_to user_path(user), class: 'thumb-info team'
+              - if user.avatar?
+                = image_tag user.avatar.url, alt: 'Avatar', class: 'img-responsive'
+              - else
+                = image_tag 'no_avatar.png', alt: 'Avatar', class: 'img-responsive'
+
+              span.thumb-info-title
+                span.thumb-info-inner
+                  = user.name
+                span.thumb-info-type
+                  = user.email
+            span.thumb-info-caption
+
+            p
+              = user.about.truncate(100)
+            span.user-rating.center
+              | USER RATING
+              strong
+                = "x#{user.reputation}"
+

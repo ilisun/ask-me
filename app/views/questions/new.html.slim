@@ -8,25 +8,29 @@
         .row
           .form-group
             .col-md-12
-              = f.label :title
+              = f.label :title, 'Title'
               = f.text_field :title, class: 'form-control'
         .row
           .form-group
             .col-md-12
-              = f.label :body
+              = f.label :tag_list, 'Tags (separated by commas)'
+              = f.text_field :tag_list, class: 'form-control'
+        .row
+          .form-group
+            .col-md-12
+              = f.label :body, 'Body'
               = f.text_area :body, class: 'form-control', rows: '10'
 
-        /= render 'questions/add_files', :f => f
         .row
           .form-group
             .col-md-12
               p Attachments:
               p
-                = f.fields_for :attachments do |a|
+                = f.fields_for :attachments, @question.attachments.build do |a|
                   - if a.object.new_record?
                     .right
                       = a.link_to_remove "delete file", class: 'grey-link'
-                    = a.label :file
+                    = a.label :file, 'File'
                     = a.file_field :file
 
                 = f.link_to_add "add file", :attachments, class: 'grey-link'

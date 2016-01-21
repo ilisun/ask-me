@@ -307,11 +307,6 @@ ul.history li .featured-box .box-content {
 	border-top-color: #0088cc;
 }
 
-.recent-posts .date .month,
-article.post .post-date .month {
-	background-color: #0088cc;
-}
-
 .recent-posts .date .day,
 article.post .post-date .day {
 	color: #0088cc;

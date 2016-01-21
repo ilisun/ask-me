@@ -1,0 +1,15 @@
+.row
+  .form-group
+    .col-md-12
+      p
+        | Attachments:
+      .fields
+        .right
+          input type="hidden" value="false" name="answer[attachments_attributes][0][_destroy]" id="answer_attachments_attributes_0__destroy"
+          a class="grey-link remove_nested_fields" data-association="attachments" href="javascript:void(0)"
+            | delete file
+        label for="answer_attachments_attributes_0_file"
+          | File
+        input type="file" name="answer[attachments_attributes][0][file]" id="answer_attachments_attributes_0_file"
+      a class="grey-link add_nested_fields" data-association="attachments" data-blueprint-id="attachments_fields_blueprint" href="javascript:void(0)"
+        | add file

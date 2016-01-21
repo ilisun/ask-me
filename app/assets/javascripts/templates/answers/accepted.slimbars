@@ -1,0 +1,8 @@
+div id="accepted-{{answer}}"
+  .check.accepted
+    span.month
+      i.fa.fa-check
+  .check
+    span.month
+      a href="/answers/{{answer}}/unaccepted" class="unaccepted-answer" data-answer-id="{{answer}}" data-type="json" data-remote="true" rel="nofollow" data-method="post"
+        i.fa.fa-ban

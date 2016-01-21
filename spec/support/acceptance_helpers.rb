@@ -21,4 +21,16 @@ module AcceptanceHelper
     click_on 'Create'
   end
 
+  def create_comment_to_question(question)
+    click_link ('add comment'), href: "/questions/#{question.id}/comments/new"
+    fill_in 'comment[body]', with: 'My comment to question'
+    click_on 'Post comment'
+  end
+
+  def create_comment_to_answer(answer)
+    click_link ('add comment'), href: "/answers/#{answer.id}/comments/new"
+    fill_in 'comment[body]', with: 'My comment to answer'
+    click_on 'Post comment'
+  end
+
 end

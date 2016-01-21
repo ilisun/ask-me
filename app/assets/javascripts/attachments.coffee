@@ -5,11 +5,16 @@
 destroy_attach = ->
   $('.destroy-attach-link').click (e) ->
     e.preventDefault()
-    $(this).hide()
-    attach_id = $(this).data('attachId')
-    $('li#attach-' + attach_id).remove()
+    $(this).bind 'ajax:success', (e,  data, status, xhr) ->
+      obj = $.parseJSON(xhr.responseText)
+      $(this).hide()
+      attach_id = $(this).data('attachId')
+      $('li#attach-' + attach_id).remove()
+      renderFlashMessage('Your attachment is successfully deleted.', "info")
 
 $ ->
 
 $(document).on "page:update", ->
   destroy_attach()
+
+

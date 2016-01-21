@@ -1,0 +1,24 @@
+ul.comments.reply id="comment-{{comment.id}}"
+  li
+    .comment
+      .img-thumbnail
+        img alt="Avatar" class="avatar" src="{{comment.user_avatar}}"
+      .comment-block
+        .comment-arrow
+        span.comment-by
+        p = "{{comment.body}}"
+        span.date
+          i.fa.fa-user
+          | By
+          a[href="#"]
+            = "{{comment.name}}"
+
+        span.date
+          i.fa.fa-clock-o
+          = "{{time}}"
+
+        | {{#if thisUserComment}}
+        span.date.pull-right
+          a href="/comments/{{comment.id}}" class="grey-link destroy-comment-link" data-method="delete" data-comment-id="{{comment.id}}" data-remote="true" rel="nofollow" data-type="json"
+            | delete
+        | {{/if}}

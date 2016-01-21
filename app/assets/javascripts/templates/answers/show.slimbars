@@ -1,0 +1,8 @@
+article.post.post-large.blog-single-post id="article-{{answer.id}}"
+  div id="answer-form-{{answer.id}}"
+  div id="answer-attach-{{answer.id}}"
+  div id="answer-edit-{{answer.id}}"
+  .post-block.post-comments
+    ul.comments
+      li
+        div id="new-comments-{{answer.id}}"

@@ -1,0 +1,26 @@
+- parent.comments.each do |comment|
+  ul.comments.reply id="comment-#{comment.id}"
+    li
+      .comment
+        .img-thumbnail
+          - if comment.user.avatar?
+            = image_tag comment.user.avatar.url(:thumb), alt: "Avatar", class: "avatar"
+          - else
+            = image_tag 'no_avatar.png', alt: "Avatar", class: "avatar"
+
+        .comment-block
+          .comment-arrow
+          span.comment-by
+          p
+            = comment.body
+          span.date
+            i.fa.fa-user
+            | By
+            a[href="#"]
+              = comment.user.email
+          span.date
+            i.fa.fa-clock-o
+            = timeago_tag comment.created_at, date_only: false, format: "%B %d, %Y at %H:%M"
+          - if user_signed_in? and current_user == comment.user
+            span.date.pull-right
+              = link_to 'delete', comment_path(comment), class: 'grey-link destroy-comment-link', method: :delete, data: { comment_id: comment.id, type: 'json' }, remote: true

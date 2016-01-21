@@ -91,6 +91,10 @@ h6.shorter {
 	margin-bottom: 0;
 }
 
+h2.shorter {
+	margin-bottom: 10px;
+}
+
 h1.tall,
 h2.tall,
 h3.tall,
@@ -289,8 +293,8 @@ select {
 	outline: none;
 }
 
-.label {
-	font-weight: normal;
+.btn.tag {
+	margin: 0 0 8px 5px;
 }
 
 .form-group:after {
@@ -1514,6 +1518,7 @@ body.boxed .pricing-table .plan, body.boxed .pricing-table h3 {
 	position: relative;
 	text-decoration: none;
 	max-width: 100%;
+	height: 270px;
 }
 
 .thumb-info:hover .thumb-info-action-icon {
@@ -2411,6 +2416,14 @@ ul.social-icons li.vk:hover {
 }
 
 /* Counters */
+.counters {
+	margin: 5px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	background-color: #66BDF0;
+	color: #FFF;
+}
+
 .counters strong {
 	display: block;
 	font-weight: 600;
@@ -2629,6 +2642,11 @@ ul.team-list .team-item {
 ul.team-list .team-item .thumb-info-social-icons {
 	margin: 0 10px;
 }
+.team-item > p {
+	height: 64px;
+	padding: 5px 5px 5px 5px;
+}
+
 
 /* History */
 ul.history {
@@ -2724,4 +2742,17 @@ ul.history li .featured-box .box-content {
 
 .btn {
 	margin-right: 20px;
+}
+
+.user-rating {
+	border-top: 1px dotted #DDD;
+	margin: 0;
+	padding: 15px 0;
+	display: block;
+}
+
+
+.user-rating > strong {
+	font-size: 18px;
+	padding-left: 10px;
 }

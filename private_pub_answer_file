@@ -1,0 +1,298 @@
+# Place all the behaviors and hooks related to the matching controller here.
+# All this logic will automatically be available in application.js.
+# You can use CoffeeScript in this file: http://coffeescript.org/
+
+# Рендер ответа
+#renderAnswer = ->
+#  $('form.new_answer').bind 'ajax:success', (e, data, status, xhr) ->
+#    obj = $.parseJSON(xhr.responseText)
+#    current_user_id = $('.footer-data').data('userId')
+#    answer_template = HandlebarsTemplates['answers/show']
+#      answer: obj.answer
+#      attach: obj.attachments
+#      thisUserAnswer: current_user_id == obj.answer.user_id
+#    $('.answers').append(answer_template)
+#    renderExistingAttachments(obj)
+#    $('#new_answer_body').val('')
+#    flash_template = HandlebarsTemplates['flash_messages']
+#      message: obj.flash.notice
+#      type: "info"
+#    $('.body').prepend(flash_template)
+#
+#  .bind 'ajax:error', (e, xhr, status, error) ->
+#    errors = $.parseJSON(xhr.responseText)
+#    flash_template = HandlebarsTemplates['flash_messages']
+#      message: errors.flash
+#      type: "danger"
+#    $('.body').prepend(flash_template)
+
+
+
+
+renderPrivatePubAnswer = ->
+  questionId = $('.answers').data('questionId')
+  PrivatePub.subscribe '/questions/' + questionId + '/answers', (data, channel) ->
+    obj = $.parseJSON(data['answer'])
+    current_user_id = $('.footer-data').data('userId')
+    if obj.action == 'create'
+      console.log(obj)
+      answer_template = HandlebarsTemplates['answers/show']
+        answer: obj.answer
+        attach: obj.attachments
+        thisUserAnswer: current_user_id == obj.answer.user_id
+      $('.answers').append(answer_template)
+      renderExistingAttachments(obj)
+      $('#new_answer_body').val('')
+      flash_template = HandlebarsTemplates['flash_messages']
+        message: obj.flash.notice
+        type: "info"
+      $('.body').prepend(flash_template)
+    else if obj.action == 'destroy'
+      console.log(obj)
+      console.log("private pub " + obj.answer.id)
+      $('article#article-' + obj.answer.id).replaceWith()
+      $("input[name^='answer']").prop('disabled', false);
+    else if obj.action == 'update'
+      console.log(obj)
+      answer_template = HandlebarsTemplates['answers/show']
+        answer: obj.answer
+        attach: obj.attachments
+        thisUserAnswer: current_user_id == obj.answer.user_id
+      $('article#article-' + obj.answer.id).replaceWith(answer_template)
+      renderExistingAttachments(obj)
+      flash_template = HandlebarsTemplates['flash_messages']
+        message: obj.flash.notice
+        type: "info"
+      $('.body').prepend(flash_template)
+
+    $('.edit-answer-link').click (e) ->
+      e.preventDefault()
+      $(this).bind 'ajax:success', (e,  data, status, xhr) ->
+        obj = $.parseJSON(xhr.responseText)
+        answer_edit_template = HandlebarsTemplates['answers/edit']
+          answer: obj
+        $("#answer-edit-" + obj.id).html(answer_edit_template)
+        $("#answer-add-attach-" + obj.id).html HandlebarsTemplates['attachments/add_attachments']
+
+
+# Рендер формы редактирования ответа
+renderEditForm = ->
+  $('.edit-answer-link').click (e) ->
+    e.preventDefault()
+    $(this).bind 'ajax:success', (e,  data, status, xhr) ->
+      obj = $.parseJSON(xhr.responseText)
+      answer_edit_template = HandlebarsTemplates['answers/edit']
+        answer: obj
+      $("#answer-edit-" + obj.id).html(answer_edit_template)
+      $("#answer-add-attach-" + obj.id).html HandlebarsTemplates['attachments/add_attachments']
+
+closeEditForm = ->
+  $('.close-edit-answer').click (e) ->
+    form_id = $('.close-edit-answer').data('answerId')
+    $("form#edit-answer-" + form_id).replaceWith()
+
+# Редактирование ответа
+editAnswer = ->
+  $('form.edit_answer').bind 'ajax:success', (e,  data, status, xhr) ->
+    obj = $.parseJSON(xhr.responseText)
+    current_user_id = $('.footer-data').data('userId')
+    answer_template = HandlebarsTemplates['answers/show']
+      answer: obj.answer
+      attach: obj.attachments
+      thisUserAnswer: current_user_id == obj.answer.user_id
+    $('article#article-' + obj.answer.id).replaceWith(answer_template)
+    renderExistingAttachments(obj)
+    flash_template = HandlebarsTemplates['flash_messages']
+      message: obj.flash.notice
+      type: "info"
+    $('.body').prepend(flash_template)
+  .bind 'ajax:error', (e, xhr, status, error) ->
+    errors = $.parseJSON(xhr.responseText)
+    flash_template = HandlebarsTemplates['flash_messages']
+      message: errors.flash
+      type: "danger"
+    $('.body').prepend(flash_template)
+
+# Удаление ответа
+deleteAnswer = ->
+  $('.destroy-answer-link').click (e) ->
+    e.preventDefault()
+    $(this).bind 'ajax:success', (e,  data, status, xhr) ->
+      obj = $.parseJSON(xhr.responseText)
+      console.log("ajax " + obj.answer.id)
+
+      $('article#article-' + obj.answer.id).replaceWith()
+      flash_template = HandlebarsTemplates['flash_messages']
+        message: obj.flash.notice
+        type: "info"
+      $('.body').prepend(flash_template)
+    .bind 'ajax:error', (e, xhr, status, error) ->
+      errors = $.parseJSON(xhr.responseText)
+      flash_template = HandlebarsTemplates['flash_messages']
+        message: errors.flash
+        type: "danger"
+      $('.body').prepend(flash_template)
+
+# ----------------------------------------------------------------------
+
+renderExistingAttachments = (answer) ->
+  addAttachmentsNames(answer.attachments ||= [])
+  if answer.attachments.length > 0
+    $("#answer-attach-" + answer.answer.id).html HandlebarsTemplates['attachments/attachments']
+      attachments: answer.attachments
+
+
+addAttachmentsNames = (attachments) ->
+  attachments.forEach (attachment) ->
+    attachment.file.name = attachment.file.url.slice(attachment.file.url.lastIndexOf('/') + 1)
+
+
+$ ->
+  renderEditForm()
+
+$(document).on "page:update", ->
+  renderEditForm()
+#  editAnswer()
+#  deleteAnswer()
+  closeEditForm()
+
+$(document).on "page:change", ->
+  renderPrivatePubAnswer()
+
+
+$(document).on "page:before-change", ->
+  alert "before-change"
+$(document).on "page:fetch", ->
+  alert "fetch"
+$(document).on "page:receive", ->
+  alert "receive"
+$(document).on "page:before-unload", ->
+  alert "before-unload"
+$(document).on "page:change", ->
+  alert "change"
+$(document).on "page:update", ->
+  alert "update"
+$(document).on "page:load", ->
+  alert "load"
+$(document).on "page:after-remove", ->
+  alert "after-remove"
+
+
+
+
+
+
+_____________________________________________________---
+controller
+_____________________________________________________---
+
+class AnswersController < ApplicationController
+
+  before_action :load_question, only: [:create, :update, :destroy, :edit]
+  before_action :load_answer, only: [:update, :destroy, :edit]
+  before_action :authenticate_user!
+
+  def create
+    @answer = @question.answers.build(answer_params)
+    @answer.user = current_user
+
+    respond_to do |format|
+      if @answer.save
+        flash[:notice] = 'Your answer successfully created.'
+        # format.json { render json: { answer: @answer, attachments: @answer.attachments, flash: flash.to_hash } }
+        format.json do
+          head :no_content
+
+          h = Hash.new
+          h[:answer] = @answer
+          h[:action] = action_name
+          h[:attachments] = @answer.attachments
+          h[:flash] = flash.to_hash
+
+          PrivatePub.publish_to("/questions/#{@question.id}/answers", answer: h.to_json)
+        end
+
+        flash.discard
+      else
+        format.json { render json: { :flash => 'ERROR: ' + @answer.errors.full_messages.to_sentence }, status: :unprocessable_entity }
+      end
+    end
+
+  end
+
+  def edit
+    respond_to do |format|
+      format.json { render json: @answer }
+      # format.json do
+      #   head :no_content
+      #
+      #   h = Hash.new
+      #   h[:answer] = @answer
+      #   h[:action] = action_name
+      #   PrivatePub.publish_to("/questions/#{@question.id}/answers", answer: h.to_json)
+      # end
+    end
+  end
+
+
+  def update
+    respond_to do |format|
+      if @answer.update(answer_params)
+        flash[:notice] = 'Your answer successfully fixed.'
+        # format.json { render json: { :answer => @answer, attachments: @answer.attachments, :flash => flash.to_hash } }
+        format.json do
+          head :no_content
+
+          h = Hash.new
+          h[:answer] = @answer
+          h[:action] = action_name
+          h[:attachments] = @answer.attachments
+          h[:flash] = flash.to_hash
+
+          PrivatePub.publish_to("/questions/#{@question.id}/answers", answer: h.to_json)
+        end
+        flash.discard
+      else
+        format.json { render json: { :flash => 'ERROR: ' + @answer.errors.full_messages.to_sentence }, status: :unprocessable_entity }
+      end
+    end
+
+  end
+
+  def destroy
+    respond_to do |format|
+      if current_user == @answer.user
+        @answer.destroy
+        flash[:notice] = 'Your answer is successfully deleted.'
+        # format.json { render json: { answer: @answer, flash: flash.to_hash } }
+        format.json do
+          head :no_content
+
+          h = Hash.new
+          h[:answer] = @answer
+          h[:action] = action_name
+          PrivatePub.publish_to("/questions/#{@question.id}/answers", answer: h.to_json)
+        end
+        flash.discard
+      else
+        format.json { render json: { :flash => 'You are not the author of this answer!' }, status: :unprocessable_entity }
+      end
+    end
+
+  end
+
+  private
+
+  def load_question
+    @question = Question.find(params[:question_id])
+  end
+
+  def load_answer
+    @answer = Answer.find(params[:id])
+  end
+
+  def answer_params
+    params.require(:answer).permit(:body, attachments_attributes: [:file, :id, :_destroy])
+  end
+
+end

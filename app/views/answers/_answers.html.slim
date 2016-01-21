@@ -1,40 +1,53 @@
 - @question.answers.each do |answer|
   - if answer.persisted?
     = content_tag "article", class: "post post-large blog-single-post", id: "article-#{answer.id}"
-      .post-date
-        span.day
-          | 10
-        span.month
-          | Jan
-      .post-content
+      div id="answer-form-#{answer.id}"
+        .post-vote
+          = render 'votes/votes', parent: answer
 
-        p = answer.body
+          div id="accepted-#{answer.id}"
+            - if answer.accepted
+              .check.accepted
+                span.month
+                  i.fa.fa-check
+              - if can?(:unaccepted, answer)
+                .check
+                  span.month
+                    = link_to unaccepted_answer_path(answer), class: 'unaccepted-answer', remote: true, data: { answer_id: answer.id, type: :json}, method: :post
+                      i.fa.fa-ban
+            - elsif can?(:unaccepted, answer)
+              .check
+                span.month
+                  = link_to accepted_answer_path(answer), class: 'accepted-answer', remote: true, data: { answer_id: answer.id, type: :json }, method: :post
+                    i.fa.fa-check
 
-        .post-meta
-          .left-span#answer-link
+        .post-content
+
+          p = answer.body
+
+          .post-meta
+            .left-span#answer-link
+              - if can?(:create, Comment)
+                span
+                  = link_to 'add comment', new_answer_comment_path(answer), class: 'new-comment-link', data: { answer_id: answer.id, type: 'json' }, remote: true
+              - if can?(:destroy, answer)
+                span
+                  / TODO Убрал confirm т.к. не знаю как передать его значение ответа в скрипт
+                  = link_to 'delete', answer_path(answer), class: 'grey-link destroy-answer-link', method: :delete, data: { answer_id: answer.id, type: 'json' }, remote: true
+              - if can?(:update, answer)
+                span
+                  = link_to 'edit', edit_answer_path(answer), class: 'grey-link edit-answer-link', data: { answer_id: answer.id, type: 'json' }, remote: true
+
             span
+              i.fa.fa-user
+              | By &nbsp
               a[href="#"]
-                | add comment
-            - if user_signed_in? and current_user == answer.user
-              span
-                / TODO Убрал confirm т.к. не знаю как передать его значение ответа в скрипт
-                = link_to 'delete', question_answer_path(answer.question, answer), class: 'grey-link destroy-answer-link', method: :delete, data: { answer_id: answer.id }, remote: true
-              span
-                = link_to 'edit', '', class: 'grey-link edit-answer-link', data: { answer_id: answer.id }, remote: true
+                = answer.user.email
+            span
+              i.fa.fa-clock-o
+              = timeago_tag answer.created_at, date_only: false, format: "%B %d, %Y at %H:%M"
 
-          span
-            i.fa.fa-user
-            | By &nbsp
-            a[href="#"]
-              | John Doe
-          span
-            i.fa.fa-tag
-            a[href="#"]
-              | Duis
-            | , &nbsp
-            a[href="#"]
-              | News
-
+      div id="answer-attach-#{answer.id}"
         - if answer.attachments.present?
           h6 Add files:
           ul
@@ -42,66 +55,15 @@
               - if !a.new_record?
                 = content_tag "li", id: "attach-#{a.id}"
                   = link_to a.file.identifier, a.file.url
-                  - if user_signed_in? and current_user == @question.user
+                  - if can?(:update, answer)
                     .right
-                      = link_to '&times;'.html_safe, attachment_path(a), class: 'grey-link destroy-attach-link', data: {attach_id: a.id}, method: :delete, remote: true
+                      = link_to '&times;'.html_safe, attachment_path(a), class: 'grey-link destroy-attach-link', data: { attach_id: a.id, type: 'json' }, method: :delete, remote: true
 
-      = nested_form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
-        .row
-          .form-group
-            .col-md-12
-              = f.label :body, 'Edit answer'
-              = f.text_area :body, class: 'form-control text-ara-grey', rows: '10'
+      div id="answer-edit-#{answer.id}"
 
-        .row
-          .form-group
-            .col-md-12
-              p Attachments:
-              p
-                = f.fields_for :attachments, @answer.attachments.build do |a|
-                  - if a.object.new_record?
-                    .right
-                      = a.link_to_remove "delete file", class: 'grey-link'
-                    = a.label :file
-                    = a.file_field :file
+      .post-block.post-comments
+        ul.comments
+          li
+            = render 'comments/comments', parent: answer
+            div id="new-comments-#{answer.id}"
 
-                = f.link_to_add "add file", :attachments, class: 'grey-link'
-
-        .row
-          .col-md-12
-            = f.submit 'Save', class: 'btn btn-primary', 'data-loading-text': 'Loading...'
-            = link_to 'Close', '', class: 'close-edit-answer', data: { answer_id: answer.id }
-
-
-        /.post-block.post-comments.clearfix
-        /
-        /  ul.comments
-        /    li
-        /      ul.comments.reply
-        /        li
-        /          .comment
-        /            .img-thumbnail
-        /              = image_tag "avatar.jpg", alt: "Avatar", class: "avatar"
-        /            .comment-block
-        /              .comment-arrow
-        /              span.comment-by
-        /              p
-        /                | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae, gravida pellentesque urna varius vitae.
-        /              span.date.pull-right
-        /                | January 12, 2013 at 1:38 pm -
-        /                strong
-        /                  | - John Doe
-        /      ul.comments.reply
-        /        li
-        /          .comment
-        /            .img-thumbnail
-        /              = image_tag "avatar.jpg", alt: "Avatar", class: "avatar"
-        /            .comment-block
-        /              .comment-arrow
-        /              span.comment-by
-        /              p
-        /                | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae, gravida pellentesque urna varius vitae.
-        /              span.date.pull-right
-        /                | January 12, 2013 at 1:38 pm -
-        /                strong
-        /                  | - John Doe

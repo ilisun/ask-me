@@ -2,11 +2,15 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery.remotipart
+// require private_pub
 //= require jquery_nested_form
+//= require handlebars.runtime
+//= require rails-timeago
 
 // Libs
 //= require bootstrap/js/bootstrap
 //= require jquery.validate
+//= require jquery.knob
 // Theme Initializer
 //= require theme.plugins
 

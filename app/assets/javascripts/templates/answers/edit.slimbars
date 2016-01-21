@@ -1,0 +1,18 @@
+form id="edit-answer-{{answer.id}}" class="edit_answer" accept-charset="UTF-8" action="/answers/{{answer.id}}" data-remote="true" data-type="json" method="post" style="display: block;"
+  input name="utf8" type="hidden" value="✓"
+  input name="_method" type="hidden" value="patch"
+  .row
+    .form-group
+      .col-md-12
+        label for="answer_body"
+          | Edit answer
+        textarea class="form-control text-ara-grey" rows="10" name="answer[body]" id="answer_body"
+          | {{answer.body}}
+
+  div id="answer-add-attach-{{answer.id}}"
+
+  .row
+    .col-md-12
+      input type="submit" name="commit" value="Save" class="btn btn-primary" data-loading-text="Loading..."
+      button type="button" class="btn close-edit-answer" data-answer-id="{{answer.id}}"
+        | Close

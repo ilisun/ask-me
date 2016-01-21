@@ -1,0 +1,11 @@
+
+.vote class="vote-#{parent.class.name.downcase}"
+  span.month
+    = link_to send("vote_up_#{parent.class.name.downcase}_path", parent, class: parent.class), class: 'votes-button', remote: true, data: { type: :json }, method: :post
+      i.fa.fa-caret-up
+  div id="vote-#{parent.class.to_s.downcase}-#{parent.id}"
+    span.day
+      = parent.votes_sum
+  span.month
+    = link_to send("vote_down_#{parent.class.name.downcase}_path", parent, class: parent.class), class: 'votes-button', remote: true, data: { type: :json }, method: :post
+      i.fa.fa-caret-down

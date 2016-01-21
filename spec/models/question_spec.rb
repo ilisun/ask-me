@@ -11,11 +11,26 @@ RSpec.describe Question, type: :model do
   end
 
   describe 'аssociation of Question model' do
-    it { should have_many(:answers).dependent(:destroy)  }
-    it { should belong_to(:user)}
-    it { should have_many(:attachments)  }
+    it { should have_many(:answers).dependent(:destroy) }
+    it { should have_many(:attachments) }
+    it { should have_many(:comments) }
+    it { should have_many(:votes) }
+    it { should belong_to(:user) }
 
     it { should accept_nested_attributes_for(:attachments)  }
+  end
+
+  describe 'show_title and show_object' do
+    let(:user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+
+    it 'show_title' do
+      expect(question.show_title).to eq "Q: MyString MyString"
+    end
+
+    it 'show_object' do
+      expect(question.show_object).to eq question
+    end
   end
 
 end

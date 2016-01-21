@@ -1,42 +1,40 @@
 class AnswersController < ApplicationController
 
-  before_action :load_question, only: [:create, :update, :destroy]
-  before_action :load_answer, only: [:update, :destroy]
   before_action :authenticate_user!
+  before_action :load_question, only: [:create]
+  before_action :load_answer, only: [:update, :destroy, :edit, :accepted, :unaccepted]
+
+  respond_to :json
+  authorize_resource
+
 
   def create
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
+    respond_with(@answer = @question.answers.create(answer_params.merge(user: current_user)))
+  end
 
-    if @answer.save
-      flash[:notice] = 'Your answer successfully created.'
-      # redirect_to question_path(@question)
-    else
-      flash[:error] = 'ERROR: ' + @answer.errors.full_messages.to_sentence
-      # render "questions/show"
-    end
-
+  def edit
+    respond_with(@answer)
   end
 
   def update
-    if @answer.update(answer_params)
-      flash[:notice] = 'Your answer successfully fixed.'
-      # redirect_to question_path(@question)
-    else
-      flash[:alert] = 'Your answer is incorrect.'
-      # render 'edit'
-    end
+    @answer.update(answer_params)
+    respond_with(@answer, json: @answer)
   end
 
   def destroy
-    if current_user == @answer.user
-      @answer.destroy
-      flash[:notice] = 'Your answer is successfully deleted.'
-      # redirect_to question_path(@question)
-    else
-      flash[:alert] = 'You are not the author of this answer!'
-      # redirect_to questions_path
-    end
+    @answer.destroy
+    respond_with(@answer, json: @answer)
+  end
+
+  def accepted
+    @answer.update_attributes(accepted: true)
+    Reputation.new(reputationable: @answer, user: @answer.user, operation: 'accepted_answer').increase
+    render nothing: true
+  end
+
+  def unaccepted
+    @answer.update_attributes(accepted: false)
+    render nothing: true
   end
 
   private

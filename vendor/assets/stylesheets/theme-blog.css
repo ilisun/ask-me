@@ -50,31 +50,83 @@ article.post .post-meta i {
 	margin-right: 3px;
 }
 
-article.post .post-date {
-	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+article.post .post-vote {
 	float: left;
-	margin-right: 10px;
+	/*margin-top: 10px;*/
+	margin-right: 20px;
 	text-align: center;
 }
 
-article.post .post-date .month {
-	background: #CCC;
-	border-radius: 0 0 2px 2px;
-	box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.07) inset;
-	color: #FFF;
-	font-size: 0.9em;
-	padding: 0 10px 2px;
+article.post .post-vote.index {
+	margin-top: 10px;
 }
 
-article.post .post-date .day {
-	background: #F4F4F4;
-	border-radius: 2px 2px 0 0;
+article.post .post-vote .vote {
+	padding: 0 5px 0 5px;
+}
+
+article.post .post-vote .vote-answers {
+	background-color: rgba(111, 207, 112, 0.3);
+	margin-top: 5px;
+	padding: 0 5px 0 5px;
+}
+
+article.post .post-vote .check {
+	margin-top: 20px;
+}
+
+article.post .post-vote .accepted > span {
+	color: #44B449;
+	height: 24px;
+}
+
+
+article.post .post-vote .check .month > a {
+	color: rgba(38, 40, 39, 0.24);
+}
+
+article.post .post-vote .check .month > a:hover {
+	color: rgba(38, 40, 39, 0.33);
+}
+
+article.post .post-vote .check .month > a:active {
+	color: rgba(47, 140, 49, 0.53);
+}
+
+article.post .post-vote .month {
+	height: 24px;
+	font-size: 40px;
+}
+
+article.post .post-vote .vote .month > a {
+	color: #ffb2a8;
+}
+
+article.post .post-vote .vote .month > a:hover {
+	color: #ff807f;
+}
+
+article.post .post-vote .vote .month > a:active {
+	color: #79c0ff;
+}
+
+
+article.post .post-vote .day {
+	/*background: #F4F4F4;*/
 	color: #CCC;
 	display: block;
 	font-size: 16px;
 	font-weight: 500;
 	font-weight: bold;
-	padding: 10px;
+}
+
+article.post .post-vote .index-vote {
+	/*background: #F4F4F4;*/
+	color: #CCC;
+	display: block;
+	font-size: 16px;
+	font-weight: 500;
+	font-weight: bold;
 }
 
 article.post .post-image .owl-carousel {
@@ -151,7 +203,7 @@ article.post-large h2 {
 	margin-bottom: 5px;
 }
 
-article.post-large .post-image, article.post-large .post-date {
+article.post-large .post-image, article.post-large .post-vote {
 	margin-left: -60px;
 }
 
@@ -174,7 +226,7 @@ article.post-large .post-audio {
 /* Single Post */
 .single-post article {
 	border-bottom: 0;
-	margin-bottom: 0;
+	margin-bottom: 30px;
 }
 
 article.blog-single-post .post-meta {
@@ -243,7 +295,11 @@ article.blog-single-post .post-meta {
 
 /* Post Comments */
 .post-comments {
-	margin-top: 45px;
+	margin-top: 25px;
+}
+
+.comment-block i {
+	margin-right: 3px;
 }
 
 ul.comments {
@@ -267,7 +323,8 @@ ul.comments li ul.reply {
 }
 
 ul.comments li a {
-	text-decoration: none;
+	/*text-decoration: none;*/
+	padding-left: 8px;
 }
 
 ul.comments li .img-thumbnail {
@@ -293,7 +350,7 @@ ul.comments .comment-arrow {
 ul.comments .comment-block {
 	background: #F4F4F4;
 	border-radius: 5px;
-	padding: 20px 20px 30px;
+	padding: 20px 20px 10px;
 	position: relative;
 }
 
@@ -301,7 +358,7 @@ ul.comments .comment-block p {
 	font-size: 0.9em;
 	line-height: 21px;
 	margin: 0;
-	padding: 0;
+	padding-bottom: 10px;
 }
 
 ul.comments .comment-block .comment-by {
@@ -315,6 +372,7 @@ ul.comments .comment-block .comment-by {
 ul.comments .comment-block .date {
 	color: #999;
 	font-size: 0.9em;
+	padding-right: 8px;
 }
 
 /* Leave a Comment */

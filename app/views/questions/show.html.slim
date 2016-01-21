@@ -4,92 +4,66 @@
       .blog-posts.single-post
         .question
           article.post.post-large.blog-single-post
-            .post-date
-              span.day
-                | 10
-              span.month
-                | Jan
+            .post-vote
+              = render 'votes/votes', parent: @question
+
             .post-content
               h2
                 = @question.title
               p = @question.body
               .post-meta
                 .left-span#question-link
-                  span
-                    a[href="#"]
-                      | add comment
-                  - if user_signed_in? and current_user == @question.user
+                  - if can?(:create, Comment)
+                    span
+                      = link_to 'add comment', new_question_comment_path(@question), class: 'new-comment-link', data: {type: 'json'}, remote: true
+                  - if can?(:destroy, @question)
                     span
                       = link_to 'delete', @question, class: 'grey-link', method: :delete, data: {confirm: "Are you sure?"}
+                  - if can?(:update, @question)
                     span
                       = link_to 'edit', edit_question_path(@question), class: 'grey-link'
                 span
                   i.fa.fa-user
                   | By &nbsp
                   a[href="#"]
-                    | John Doe
+                    = @question.user.email
                 span
                   i.fa.fa-tag
-                  a[href="#"]
-                    | Duis
-                  | , &nbsp
-                  a[href="#"]
-                    | News
+                    - @question.tag_list.map do |tag|
+                      = link_to tag, tag_path(tag), class: 'btn btn-info btn-xs tag'
+                span
+                  i.fa.fa-clock-o
+                  = timeago_tag @question.created_at, date_only: false, format: "%B %d, %Y at %H:%M"
 
               = render 'questions/attach_files'
 
+            div id="question-comment"
 
-            /.post-block.post-comments.clearfix
-            /  ul.comments
-            /    li
-            /      ul.comments.reply
-            /        li
-            /          .comment
-            /            .img-thumbnail
-            /              = image_tag "avatar.jpg", alt: "Avatar", class: "avatar"
-            /            .comment-block
-            /              .comment-arrow
-            /              span.comment-by
-            /              p
-            /                | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae, gravida pellentesque urna varius vitae.
-            /              span.date.pull-right
-            /                | January 12, 2013 at 1:38 pm -
-            /                strong
-            /                  | - John Doe
-            /      ul.comments.reply
-            /        li
-            /          .comment
-            /            .img-thumbnail
-            /              = image_tag "avatar.jpg", alt: "Avatar", class: "avatar"
-            /            .comment-block
-            /              .comment-arrow
-            /              span.comment-by
-            /              p
-            /                | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae, gravida pellentesque urna varius vitae.
-            /              span.date.pull-right
-            /                | January 12, 2013 at 1:38 pm -
-            /                strong
-            /                  | - John Doe
+            .post-block.post-comments
+              ul.comments
+                li
+                  = render 'comments/comments', parent: @question
+                  div id="new-comments-#{@question.id}"
 
         .post-block.post-answers
           h3
             i.fa.fa-bullhorn
             | Answers (#{@question.answers.count})
 
-        .answers
+        .answers data={question_id: "#{@question.id}"}
           = render 'answers/answers'
 
         .post-block.post-leave-comment
           h3
             | Leave a answer
-          = nested_form_for [@question, @answer], remote: true do |f|
+          = nested_form_for [@question, @answer], remote: true, data: { type: :json } do |f|
             .row
               .form-group
                 .col-md-12
                   = f.label :body, 'Your answer'
                   = f.text_area :body, class: 'form-control', id: 'new_answer_body', rows: '10'
 
-            = render 'questions/add_files', :f => f
+            = render 'answers/add_files', :f => f
 
             .row
               .col-md-12
@@ -97,3 +71,4 @@
                 = link_to 'All questions', questions_path, class: 'btn btn-default btn-lg'
 
     = render 'questions/show_left'
+

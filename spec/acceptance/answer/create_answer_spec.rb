@@ -25,7 +25,11 @@ feature 'Create answer', %q{
     visit question_path(question)
     fill_in 'answer[body]', with: 'body'
     click_on 'Create'
-    expect(page).to have_content "ERROR: Body is too short (minimum is 10 characters)"
+
+    expect(current_path).to eq question_path(question)
+    within '.answers' do
+      expect(page).not_to have_content 'body'
+    end
   end
 
   scenario 'Non-authenticated user tries to visit question page' do

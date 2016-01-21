@@ -1,0 +1,5 @@
+div id="accepted-{{answer}}"
+  .check
+    span.month
+      a href="/answers/{{answer}}/accepted" class="accepted-answer" data-answer-id="{{answer}}" data-type="json" data-remote="true" rel="nofollow" data-method="post"
+        i.fa.fa-check

@@ -11,13 +11,41 @@ gem 'jquery-turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'font-awesome-rails'
+gem 'rails-timeago', '~> 2.0'
+gem 'kaminari'
 
 gem 'slim-rails'
-gem 'simple_form'
 gem 'devise'
 gem 'carrierwave'
+gem 'mini_magick'
 gem 'remotipart'
 gem 'nested_form', git: 'git://github.com/ryanb/nested_form.git'
+
+gem 'handlebars_assets'
+# gem 'private_pub'
+# gem 'thin'
+
+gem 'responders'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-vkontakte'
+
+gem 'cancancan'
+
+gem 'doorkeeper'
+gem 'active_model_serializers'
+gem 'oj'
+gem 'oj_mimic_json'
+
+gem 'mysql2'
+gem 'thinking-sphinx'
+
+gem 'acts-as-taggable-on', '~> 3.4'
+gem 'rails-observers'
+
+gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', require: nil
+gem 'sidetiq'
 
 
 group :development, :test do
@@ -31,7 +59,7 @@ end
 
 group :test do
   gem 'shoulda-matchers', '>= 3.0.0', require: false
-
+  gem 'json_spec'
 end
 
 group :development do

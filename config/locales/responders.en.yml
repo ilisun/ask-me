@@ -1,0 +1,30 @@
+en:
+  flash:
+    actions:
+      create:
+        notice: 'was successfully created.'
+        alert: 'could not be created.'
+      update:
+        notice: 'was successfully updated.'
+        alert: 'could not be updated.'
+      destroy:
+        notice: 'was successfully destroyed.'
+        alert: 'could not be destroyed.'
+
+    questions:
+      create:
+        notice: "Your question successfully created."
+        alert: "ERROR: %{alert}"
+      update:
+        notice: "Your question successfully fixed."
+        alert: "ERROR: %{alert}"
+      destroy:
+        notice: "Your question is successfully deleted"
+
+    comments:
+      create:
+        notice: "Your comment successfully created."
+        alert: "ERROR: %{alert}"
+      destroy:
+        notice: "Your comment is successfully deleted."
+        alert: "You are not the author of this answer!"

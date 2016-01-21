@@ -3,13 +3,15 @@ header#header
     h1.logo
       = link_to root_path
         = image_tag("logo.png", alt: "Ask me...", width: '256', height: '56', 'data-sticky-width': '183', 'data-sticky-height': '40')
+
     .search
-      form#searchForm[action="page-search-results.html" method="get"]
+      = form_tag search_index_path, method: :get, id: 'searchForm' do
         .input-group
-          input#q.form-control.search[type="text" name="q" placeholder="Search..."]
+          = text_field_tag :search, nil, class: 'form-control search', placeholder: 'Search...'
           span.input-group-btn
-            button.btn.btn-default[type="submit"]
+            = button_tag type: 'submit', class: 'btn btn-default',id: 'button_search'
               i.fa.fa-search
+
     button.btn.btn-responsive-nav.btn-inverse[data-toggle="collapse" data-target=".nav-main-collapse"]
       i.fa.fa-bars
   .navbar-collapse.nav-main-collapse.collapse
@@ -18,15 +20,21 @@ header#header
         ul#mainMenu.nav.nav-pills.nav-main
           li
             = link_to 'Ask question', new_question_path
+          li.dropdown
+            a.dropdown-toggle[href="#"]
+              |  Questions
+              i.fa.fa-angle-down
+            ul.dropdown-menu
+              li
+                = link_to 'All questions', root_path
+              li
+                = link_to 'Unanswered', unanswered_questions_path
+              li
+                = link_to 'Popular', popular_questions_path
           li
-            a[href="#"]
-              | Test2
+            = link_to 'Tags', tags_path
           li
-            a[href="#"]
-              | Test3
-          li
-            a[href="#"]
-              | Test4
+            = link_to 'Users', users_path
 
           - unless user_signed_in?
             li
@@ -40,8 +48,7 @@ header#header
                 i.fa.fa-angle-down
               ul.dropdown-menu
                 li
-                  a[href="#"]
-                    | Profile
+                  = link_to 'Profile', user_path(current_user)
                 li
                   = link_to 'Sign out', destroy_user_session_path, method: :delete
 hr

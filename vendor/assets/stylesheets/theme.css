@@ -2026,7 +2026,7 @@ body.dark .blog-posts article {
 }
 
 body.dark section.featured .recent-posts .date .day,
-body.dark article.post .post-date .day {
+body.dark article.post .post-vote .day {
 	background-color: #2e2e31;
 }
 

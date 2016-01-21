@@ -1,0 +1,42 @@
+div id="answer-form-{{answer.id}}"
+  .post-vote
+    .vote
+      span.month
+        a href="/answers/{{answer.id}}/vote_up?class=Answer" class="votes-button" data-type="json" data-remote="true" rel="nofollow" data-method="post"
+          i.fa.fa-caret-up
+      div id="vote-answer-{{answer.id}}"
+        span.day
+          | 0
+      span.month
+        a href="/answers/{{answer.id}}/vote_down?class=Answer" class="votes-button" data-type="json" data-remote="true" rel="nofollow" data-method="post"
+          i.fa.fa-caret-down
+    div id="accepted-{{answer.id}}"
+      | {{#if thisUserQuestion}}
+      .check
+        span.month
+          a href="/answers/{{answer.id}}/accepted" class="accepted-answer" data-answer-id="{{answer.id}}" data-type="json" data-remote="true" rel="nofollow" data-method="post"
+            i.fa.fa-check
+      | {{/if}}
+  .post-content
+    p = "{{answer.body}}"
+    .post-meta
+      .left-span#answer-link
+        span
+          a href="/answers/{{answer.id}}/comments/new" class="new-comment-link" data-type="json" data-remote="true"
+            | add comment
+        | {{#if thisUserAnswer}}
+        span
+          a href="/answers/{{answer.id}}" class="grey-link destroy-answer-link" data-answer-id="{{answer.id}}" data-method="delete" data-remote="true" rel="nofollow" data-type="json"
+            | delete
+        span
+          a href="/answers/{{answer.id}}/edit" class="grey-link edit-answer-link" data-answer-id="{{answer.id}}" data-remote="true" data-type="json"
+            | edit
+        | {{/if}}
+      span
+        i.fa.fa-user
+        | By &nbsp
+        a[href="#"]
+          = "{{answer.name}}"
+      span
+        i.fa.fa-clock-o
+        = "{{time}}"

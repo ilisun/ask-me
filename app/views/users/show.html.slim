@@ -1,0 +1,43 @@
+.container
+  .row
+    .col-md-4
+      div
+        .thumbnail
+          - if @user.avatar?
+            = image_tag @user.avatar.url
+          - else
+            = image_tag('no_avatar.png', alt: 'No avatar')
+    .col-md-8
+      p
+        h2.shorter
+          strong
+            = @user.name
+        h5
+          = @user.email
+      - if can?(:update, @user)
+        = link_to 'Edit profile', edit_user_path(@user), class: 'btn btn-primary btn-sm'
+
+      hr
+
+      blockquote
+        = @user.about
+
+      hr
+
+
+  .row.center.counters
+    .col-md-4
+      strong
+        = @user.reputation
+      label
+        | Rating
+    .col-md-4
+      strong
+        = @user.questions.count
+      label
+        | Questions
+    .col-md-4
+      strong
+        = @user.answers.count
+      label
+        | Answers

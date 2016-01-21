@@ -15,10 +15,10 @@ feature 'Delete answer', %q{
     sign_in(user)
     visit question_path(question)
 
-    expect(page).to have_link('delete', href: "/questions/#{question.id}/answers/#{answer.id}")
+    expect(page).to have_link('delete', href: "/answers/#{answer.id}")
 
     within '.answers' do
-      click_link ('delete'), href: "/questions/#{question.id}/answers/#{answer.id}"
+      click_link ('delete'), href: "/answers/#{answer.id}"
       page.driver.browser.accept_js_confirms
 
       expect(page).not_to have_content answer.body
@@ -32,12 +32,12 @@ feature 'Delete answer', %q{
     sign_in(another_user)
     visit question_path(question)
 
-    expect(page).not_to have_link('delete', href: "/questions/#{question.id}/answers/#{answer.id}")
+    expect(page).not_to have_link('delete', href: "/answers/#{answer.id}")
   end
 
   scenario 'Non-authenticated user tries to delete answer' do
     visit question_path(question)
-    expect(page).not_to have_link('delete', href: "/questions/#{question.id}/answers/#{answer.id}")
+    expect(page).not_to have_link('delete', href: "/answers/#{answer.id}")
   end
 
 end

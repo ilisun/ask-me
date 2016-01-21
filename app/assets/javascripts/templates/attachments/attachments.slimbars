@@ -1,0 +1,10 @@
+h6 Add files:
+ul
+  | {{#each attachments}}
+  li id="attach-{{this.id}}"
+    a href="{{this.file.url}}"
+      | {{this.file.name}}
+    .right
+      a class="grey-link destroy-attach-link" data-attach-id="{{this.id}}" data-remote="true" data-type="json" rel="nofollow" data-method="delete" href="/attachments/{{this.id}}"
+        | ×
+  | {{/each}}

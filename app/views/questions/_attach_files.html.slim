@@ -7,4 +7,4 @@
           = link_to a.file.identifier, a.file.url
           - if user_signed_in? and current_user == @question.user
             .right
-              = link_to '&times;'.html_safe, attachment_path(a), class: 'grey-link destroy-attach-link', data: { attach_id: a.id }, method: :delete, remote: true
+              = link_to '&times;'.html_safe, attachment_path(a), class: 'grey-link destroy-attach-link', data: { attach_id: a.id, type: 'json' }, method: :delete, remote: true
