@@ -22,8 +22,8 @@ gem 'remotipart'
 gem 'nested_form', git: 'git://github.com/ryanb/nested_form.git'
 
 gem 'handlebars_assets'
-# gem 'private_pub'
-# gem 'thin'
+gem 'private_pub'
+gem 'thin'
 
 gem 'responders'
 gem 'omniauth'
