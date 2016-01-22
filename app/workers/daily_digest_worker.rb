@@ -2,9 +2,11 @@ class DailyDigestWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
 
-  recurrence { daily (1) }
+  recurrence { hourly (10) }
 
   def perform
-    User.send_daily_digest
+    find_each.each do |user|
+      DailyMailer.digest(user)
+    end
   end
 end

@@ -2,7 +2,7 @@ class SphinxWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
 
-  recurrence { minutely(5) }
+  recurrence { minutely(10) }
 
   def perform
     system 'rake ts:index'
