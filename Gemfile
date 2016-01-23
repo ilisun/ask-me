@@ -45,7 +45,7 @@ gem 'rails-observers'
 
 gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', require: nil
-gem 'sidetiq'
+# gem 'sidetiq'
 
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'

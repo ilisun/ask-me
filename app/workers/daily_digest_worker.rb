@@ -1,8 +1,8 @@
 class DailyDigestWorker
   include Sidekiq::Worker
-  include Sidetiq::Schedulable
+  # include Sidetiq::Schedulable
 
-  recurrence { hourly (10) }
+  # recurrence { hourly (10) }
 
   def perform
     find_each.each do |user|
