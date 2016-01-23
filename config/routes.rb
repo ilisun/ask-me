@@ -1,4 +1,5 @@
 require 'sidekiq/web'
+require 'sidetiq/web'
 
 Rails.application.routes.draw do
   # authenticate :user, lambda { |u| u.admin?} do
