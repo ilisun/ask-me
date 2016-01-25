@@ -1,42 +1,43 @@
-.container
-  .row
-    .col-md-12
-      .blog-posts
-        - @questions.each do |question|
-          article.post.post-large
-            .post-vote.index
-              .vote
-                span.index-vote
-                  = question.votes_sum
-                span.small
-                  | votes
-              .vote-answers
-                span.index-vote
-                  = question.answers.count
-                span.small
-                  | answers
-            .post-content
-              h2
-                = link_to question.title, question
-              p
-                | #{question.body.truncate(250)}
-              .post-meta
-                span
-                  i.fa.fa-user
-                  | By &nbsp
-                  = link_to question.user.email, user_path(question.user)
-                - if question.tags.present?
+- cache collection_cache_key_for :question do
+  .container
+    .row
+      .col-md-12
+        .blog-posts
+          - @questions.each do |question|
+            article.post.post-large
+              .post-vote.index
+                .vote
+                  span.index-vote
+                    = question.votes_sum
+                  span.small
+                    | votes
+                .vote-answers
+                  span.index-vote
+                    = question.answers.count
+                  span.small
+                    | answers
+              .post-content
+                h2
+                  = link_to question.title, question
+                p
+                  | #{question.body.truncate(250)}
+                .post-meta
                   span
-                    i.fa.fa-tag
-                      - question.tag_list.map do |tag|
-                        = link_to tag, tag_path(tag), class: 'btn btn-info btn-xs tag'
-                span
-                  i.fa.fa-comments
-                  | #{question.answers.count} Answers
-                .pull-right
-                  i.fa.fa-clock-o
-                  = timeago_tag question.created_at, date_only: false, format: "%B %d, %Y at %H:%M"
+                    i.fa.fa-user
+                    | By &nbsp
+                    = link_to question.user.email, user_path(question.user)
+                  - if question.tags.present?
+                    span
+                      i.fa.fa-tag
+                        - question.tag_list.map do |tag|
+                          = link_to tag, tag_path(tag), class: 'btn btn-info btn-xs tag'
+                  span
+                    i.fa.fa-comments
+                    | #{question.answers.count} Answers
+                  .pull-right
+                    i.fa.fa-clock-o
+                    = timeago_tag question.created_at, date_only: false, format: "%B %d, %Y at %H:%M"
 
-        = paginate @questions
+          = paginate @questions
 
 

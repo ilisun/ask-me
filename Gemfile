@@ -53,6 +53,8 @@ gem 'therubyracer'
 
 gem 'unicorn'
 
+gem 'redis-rails'
+
 
 group :development, :test do
   gem 'rspec-rails'
