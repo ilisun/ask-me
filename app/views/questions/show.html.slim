@@ -26,7 +26,7 @@
                   i.fa.fa-user
                   | By &nbsp
                   a[href="#"]
-                    = @question.user.email
+                    = link_to @question.user.email, user_path(@question.user)
                 span
                   i.fa.fa-tag
                     - @question.tag_list.map do |tag|

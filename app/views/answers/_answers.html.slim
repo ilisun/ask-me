@@ -42,7 +42,7 @@
               i.fa.fa-user
               | By &nbsp
               a[href="#"]
-                = answer.user.email
+                = link_to answer.user.email, user_path(answer.user)
             span
               i.fa.fa-clock-o
               = timeago_tag answer.created_at, date_only: false, format: "%B %d, %Y at %H:%M"
