@@ -42,6 +42,7 @@ editAnswer = ->
     current_user_id = $('.footer-data').data('userId')
     answer_form = HandlebarsTemplates['answers/form']
       answer: obj.answer
+      answerBody: (new Handlebars.SafeString(obj.answer.body_html))
       thisUserAnswer: current_user_id == obj.answer.user_id
     $('#answer-form-' + obj.answer.id).replaceWith(answer_form)
     renderExistingAttachments(obj.answer)
