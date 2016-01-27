@@ -41,7 +41,7 @@
                       = image_tag 'no_avatar.png', alt: "Avatar", class: "avatar"
 
                 .post-info
-                  = link_to question.title.truncate(50), question
+                  = link_to question.title.truncate(40), question
                   .post-meta
                     = timeago_tag question.created_at, date_only: false, format: "%B %d, %Y at %H:%M"
         #recentPosts.tab-pane

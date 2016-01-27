@@ -16,8 +16,7 @@
           span.date
             i.fa.fa-user
             | By
-            a[href="#"]
-              = comment.user.email
+            = link_to comment.user.email, user_path(comment.user)
           span.date
             i.fa.fa-clock-o
             = timeago_tag comment.created_at, date_only: false, format: "%B %d, %Y at %H:%M"
