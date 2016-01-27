@@ -23,7 +23,7 @@ renderComment = ->
       comment: obj.comment
       time: addTimeAgo(obj.comment.created_at)
       thisUserComment: current_user_id == obj.comment.user_id
-    $('#new-comments-' + obj.comment.commentable_id).append(comment_template)
+    $('#new-comments-' + obj.comment.commentable_type.toLowerCase() + "-" + obj.comment.commentable_id).append(comment_template)
     $('form.new_comment').replaceWith()
     renderFlashMessage('Your comment is successfully created.', "info")
   .bind 'ajax:error', (e, xhr, status, error) ->
