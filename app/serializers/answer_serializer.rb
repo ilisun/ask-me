@@ -12,7 +12,7 @@ class AnswerSerializer < ActiveModel::Serializer
   end
 
   def body_html
-    simple_format object.body
+    simple_format(object.body, {}, :sanitize => false)
   end
 
   def question_user
