@@ -10,7 +10,7 @@
             .post-content
               h2
                 = @question.title
-              p = @question.body
+              p = simple_format @question.body
               .post-meta
                 .left-span#question-link
                   - if can?(:create, Comment)

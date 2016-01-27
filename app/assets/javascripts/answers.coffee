@@ -12,6 +12,7 @@ renderAnswer = ->
     $('.answers').append(answer_template)
     answer_form = HandlebarsTemplates['answers/form']
       answer: obj.answer
+      answerBody: (new Handlebars.SafeString(obj.answer.body_html))
       time: addTimeAgo(obj.answer.created_at)
       thisUserAnswer: current_user_id == obj.answer.user_id
       thisUserQuestion: current_user_id == obj.answer.question_user

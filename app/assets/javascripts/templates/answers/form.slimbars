@@ -18,7 +18,7 @@ div id="answer-form-{{answer.id}}"
             i.fa.fa-check
       | {{/if}}
   .post-content
-    p = "{{answer.body}}"
+    p = "{{answerBody}}"
     .post-meta
       .left-span#answer-link
         span
