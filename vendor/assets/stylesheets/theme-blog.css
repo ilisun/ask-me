@@ -441,6 +441,11 @@ ul.simple-post-list li {
 	padding: 15px 0;
 }
 
+ul.simple-post-list li img.avatar {
+	height: 50px;
+	width: 50px;
+}
+
 ul.simple-post-list li:before, ul.simple-post-list li:after {
 	content: " ";
 	display: table;
